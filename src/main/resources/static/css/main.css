@@ -1,0 +1,31 @@
+body {
+    background: #abdc28;
+    padding: 20px;
+}
+
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    background: #999;
+}
+
+td {
+    width: 75px;
+    height: 75px;
+    font-size: 50px;
+    text-align: center;
+}
+
+tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
+    background: white;
+}
+
+.draggable {
+    cursor: pointer;
+}
+
+#gameTable {
+    width: 800px;
+    height: 600px;
+    margin: 0 auto;
+}

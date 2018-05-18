@@ -126,3 +126,23 @@ div[class^="mv-"] {
     width: 1630px;
     height: 600px;
 }
+
+#timePlate {
+    width: 1200px;
+    margin-top: 10px;
+}
+
+#timePlate div {
+    width: 50%;
+    height: 70px;
+    font-size: 60px;
+    text-align: center;
+}
+
+#whiteTime {
+    float: left;
+}
+
+#blackTime {
+    float: right;
+}

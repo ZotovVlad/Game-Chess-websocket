@@ -12,8 +12,6 @@ function str_pad_left(string, pad, length) {
     return (new Array(length + 1).join(pad) + string).slice(-length);
 }
 
-// var finalTime = str_pad_left(minutes,'0',2)+':'+str_pad_left(seconds,'0',2);
-
 function Move(from, to, typeName) {
     this.typeName = typeName;
     this.from = from;
@@ -318,14 +316,6 @@ function connect() {
             start: function (event, ui) {
                 move = $(this).parents("td").attr("id");
             },
-            drag: function (event, ui) {
-                // var offset = $("#gameTable").offset();
-                // websocket.send(JSON.stringify({
-                //     'name': $(event.target).attr("id"),
-                //     'coordX': $(event.target).position().left - offset.left,
-                //     'coordY': $(event.target).position().top - offset.top
-                // }));
-            }
         });
 
         $("div[class^='cemetery-']").droppable({
@@ -368,9 +358,6 @@ function connect() {
         });
 
         $("td").droppable({
-            // classes: {
-            //     "ui-droppable-hover": "ui-state-hover"
-            // },
             drop: function (event, ui) {
                 pauseTimer();
                 $(event.toElement).css({top: 0, left: 0});
@@ -392,9 +379,7 @@ function connect() {
             resumeTimer();
             $("#" + json.figureColor + "-moves").append(json.div);
         } else if (message.indexOf("{") !== -1 && message.indexOf("Move") !== -1) { // message to move figure
-            // var offset = $("#gameTable").offset();
             $("#" + json.to).append($("#" + json.from).find("div"));
-            // $("#" + json.name).css({left: json.coordX + offset.left, top: json.coordY + offset.top});
         } else if (message.indexOf("{") !== -1 && message.indexOf("Message") !== -1) {
             $("#chatMessages").val($("#chatMessages").val() + "\n" + (json.issuer + ": " + json.msg));
             document.getElementById("chatMessages").scrollTop = document.getElementById("chatMessages").scrollHeight

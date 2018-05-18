@@ -387,28 +387,24 @@ function connect() {
 
     function onMessage(evt) {
         var message = evt.data;
+        var json = JSON.parse(message);
         if (message.indexOf("{") !== -1 && message.indexOf("MoveNotification") !== -1) {
             resumeTimer();
-            var json = JSON.parse(message);
             $("#" + json.figureColor + "-moves").append(json.div);
         } else if (message.indexOf("{") !== -1 && message.indexOf("Move") !== -1) { // message to move figure
             // var offset = $("#gameTable").offset();
-            var json = JSON.parse(message);
             $("#" + json.to).append($("#" + json.from).find("div"));
             // $("#" + json.name).css({left: json.coordX + offset.left, top: json.coordY + offset.top});
         } else if (message.indexOf("{") !== -1 && message.indexOf("Message") !== -1) {
-            var json = JSON.parse(message);
             $("#chatMessages").val($("#chatMessages").val() + "\n" + (json.issuer + ": " + json.msg));
             document.getElementById("chatMessages").scrollTop = document.getElementById("chatMessages").scrollHeight
         } else if (message.indexOf("{") !== -1 && message.indexOf("Typing") !== -1) {
-            var json = JSON.parse(message);
             if (json.typing) {
                 $("#typing").fadeIn();
             } else {
                 $("#typing").fadeOut();
             }
         } else if (message.indexOf("{") !== -1 && message.indexOf("Time") !== -1) {
-            var json = JSON.parse(message);
             if (json.color === "white") {
                 $("#whiteTime").html("<span class='time'>" + json.time + "</span>");
             } else if (json.color === "black") {
@@ -460,24 +456,21 @@ $(function () {
     }
 
     var websocket = connect();
-    var typingCheck;
     var isTyping = false;
     var isSent = false;
 
     $("#whiteTime").html("<span class='time'> 00.00 </span>");
     $("#blackTime").html("<span class='time'> 00.00 </span>");
 
-    typingCheck = setInterval(function () {
-        if (typingCheck != undefined) {
-            if (!isTyping && isSent) {
-                websocket.send(JSON.stringify(new Typing(false, "Typing")));
-                isSent = false;
-            }
+    setInterval(function () {
+        if (!isTyping && isSent) {
+            websocket.send(JSON.stringify(new Typing(false, "Typing")));
+            isSent = false;
         }
     }, 2000);
 
     $("#inp input").keypress(function (event) {
-        if (event.which == 13) {
+        if (event.which === 13) {
             event.preventDefault();
             websocket.send(JSON.stringify(new Message(myFigureColor, $("#inp input").val(), "Message")));
             $("#chatMessages").val($("#chatMessages").val() + "\n" + (myFigureColor + ": " + $("#inp input").val()));

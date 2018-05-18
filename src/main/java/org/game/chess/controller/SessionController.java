@@ -1,5 +1,6 @@
 package org.game.chess.controller;
 
+import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import java.util.*;
  */
 
 @Controller
+@Log4j
 public class SessionController {
 
     private Map<WebSocketSession, WebSocketSession> sessions = new HashMap<>();
@@ -44,8 +46,10 @@ public class SessionController {
     }
 
     public void removeSession(WebSocketSession session) {
+        log.info("Sessions online before cleanup: " + getSessionsOnline());
         sessions.values().removeAll(Collections.singleton(session));
         sessions.remove(session);
+        log.info("Sessions online after: " + getSessionsOnline());
     }
 
     public int getSessionsOnline() {

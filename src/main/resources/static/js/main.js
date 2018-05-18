@@ -416,6 +416,13 @@ function connect() {
             }
         } else if (message.indexOf("Ok!") === -1 && message.indexOf("session:") !== -1) {
             console.log(window.location.host + "/#" + message.substring('session:'.length, message.length));
+            if (window.location.href.indexOf("#") === -1) {
+                $("#waiting span").html("<h1>Waiting for opponent <br>Chess board number: "
+                    + message.substring('session:'.length, message.length)
+                    + "</h1><br><br><h2>"
+                    + window.location.host + "/#" + message.substring('session:'.length, message.length)
+                    + "</h2>");
+            }
             $("#gameTable").append(gameTable);
             myFigureColor = "white";
         } else if (message.indexOf("Connected to opponent") !== -1) {
@@ -424,6 +431,9 @@ function connect() {
             addDnD();
         } else if (message.indexOf("Opponent with id") !== -1) {
             addDnD();
+            var filterVal = 'blur(0px)';
+            $("#waiting").fadeOut();
+            $("#main-chess").css({filter: filterVal});
             whiteInterval = setInterval(function () {
                 whiteTime += 1;
                 minutes = Math.floor(whiteTime / 60);
@@ -442,6 +452,13 @@ function connect() {
 }
 
 $(function () {
+    if (window.location.href.indexOf("#") === -1) {
+        var filterVal = 'blur(7px)';
+        $("#main-chess").css({filter: filterVal});
+        $("#waiting span").html("<h2>Connection...</h2>");
+        $("#waiting").fadeIn();
+    }
+
     var websocket = connect();
     var typingCheck;
     var isTyping = false;

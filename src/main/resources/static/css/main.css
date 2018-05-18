@@ -1,12 +1,13 @@
 body {
-    background: #abdc28;
+    background: #26A69A;
     padding: 20px;
 }
 
 table {
     margin: 0 auto;
     border-collapse: collapse;
-    background: #999;
+    background: white;
+    float: left;
 }
 
 td {
@@ -17,7 +18,20 @@ td {
 }
 
 tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
-    background: white;
+    background: #999;
+}
+
+.cemetery {
+    width: 100px;
+    height: 600px;
+    float: left;
+    background-color: #A1887F;
+}
+
+div[class^="cemetery-"] {
+    width: 100px;
+    height: 300px;
+    font-size: 50px;
 }
 
 .draggable {

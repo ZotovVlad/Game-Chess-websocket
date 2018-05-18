@@ -12,17 +12,18 @@ import org.springframework.web.socket.config.annotation.*;
  */
 
 @Configuration
-@EnableWebSocketMessageBroker
-public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
+@EnableWebSocket
+public class WebsocketConfig implements WebSocketConfigurer {
 
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
-        config.setApplicationDestinationPrefixes("/app");
+    @Bean
+    public WebSocketHandler myMessageHandler() {
+        return new ChessMessageHandler();
     }
 
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chess").setAllowedOrigins("*").withSockJS();
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        registry
+                .addHandler(myMessageHandler(), "/websocket")
+                .setAllowedOrigins("*");
     }
 }

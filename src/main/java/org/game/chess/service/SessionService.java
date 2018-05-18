@@ -17,17 +17,12 @@ public class SessionService {
     @Autowired
     private SessionController sessionController;
 
-    public String saveSessionIdAndGetClientId(WebSocketSession session) throws UnsupportedEncodingException {
-        sessionController.saveSession(session);
-        return getClientIdBySessionId(session.getId());
+    public String saveSession(WebSocketSession session) throws UnsupportedEncodingException {
+        return sessionController.saveSession(session);
     }
 
-    public String getSessionIdByClientId(String clientId) {
-        return sessionController.getSessionIdByClientId(clientId);
-    }
-
-    public String getClientIdBySessionId(String sessionId) {
-        return sessionController.getClientIdBySessionId(sessionId);
+    public WebSocketSession getOpponentForSessionBySessionId(String sessionId) {
+        return sessionController.getOpponentBySessionId(sessionId);
     }
 
     public void removeSessionRecordBySessionId(String sessionId) {

@@ -48,6 +48,18 @@ div[class^="mv-"] {
     text-decoration: underline;
 }
 
+#msgs {
+    position: relative;
+}
+
+#typing {
+    position: absolute;
+    bottom: 0;
+    display: none;
+    margin-left: 7px;
+    margin-bottom: 7px;
+}
+
 #black-moves span {
     color: #212121;
 }
@@ -96,7 +108,13 @@ div[class^="mv-"] {
     height: 100%;
 }
 
-#msgs input {
+#msgs textarea {
     width: 100%;
     height: 100%;
+    resize: none;
+}
+
+#main-chess {
+    width: 1630px;
+    height: 600px;
 }

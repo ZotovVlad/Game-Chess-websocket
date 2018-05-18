@@ -1,6 +1,29 @@
 var myFigureColor;
 var figureColors = ["white", "black"];
 
+function Move(from, to, typeName) {
+    this.typeName = typeName;
+    this.from = from;
+    this.to = to;
+}
+
+function MoveNotification(div, figureColor, typeName) {
+    this.typeName = typeName;
+    this.div = div;
+    this.figureColor = figureColor;
+}
+
+function Message(issuer, msg, typeName) {
+    this.typeName = typeName;
+    this.issuer = issuer;
+    this.msg = msg;
+}
+
+function Typing(typing, typeName) {
+    this.typeName = typeName;
+    this.typing = typing
+}
+
 var gameTable = '<div class="cemetery"><div class="cemetery-white" id="cw1"></div><div class="cemetery-black" id="cb1"></div></div><table>\n' +
     '        <tr>\n' +
     '            <td id="a8">\n' +
@@ -287,14 +310,9 @@ function connect() {
                 move = move + " - X";
                 var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
                 $("#" + myFigureColor + "-moves").append(moveDiv);
-                websocket.send(JSON.stringify({
-                    'from': from,
-                    'to': to
-                }));
-                websocket.send(JSON.stringify({
-                    'div': moveDiv,
-                    'figureColor': myFigureColor
-                }));
+
+                websocket.send(JSON.stringify(new Move(from, to, "Move")));
+                websocket.send(JSON.stringify(new MoveNotification(moveDiv, myFigureColor, "MoveNotification")));
                 console.log(myFigureColor + ": " + move);
             }
         });
@@ -310,31 +328,45 @@ function connect() {
                 move = move + " - " + $(this).attr("id");
                 var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
                 $("#" + myFigureColor + "-moves").append(moveDiv);
-                websocket.send(JSON.stringify({
-                    'from': from,
-                    'to': $(this).attr("id")
-                }));
-                websocket.send(JSON.stringify({
-                    'div': moveDiv,
-                    'figureColor': myFigureColor
-                }));
+                websocket.send(JSON.stringify(new Move(from, $(this).attr("id"), "Move")));
+                websocket.send(JSON.stringify(new MoveNotification(moveDiv, myFigureColor, "MoveNotification")));
                 console.log(myFigureColor + ": " + move);
             }
         });
     }
 
+    var toCalss = function (obj, proto) {
+        obj.__proto__ = proto;
+        return obj;
+    };
+
     function onMessage(evt) {
         var message = evt.data;
-        if (jQuery.type(message) === "string" && message.indexOf("{") !== -1 && message.indexOf("div") === -1) { // message to move figure
+        // var res = toClass(JSON.parse(message), Messa)
+        if (message.indexOf("{") !== -1 && message.indexOf("Move") !== -1) { // message to move figure
             // var offset = $("#gameTable").offset();
             var json = JSON.parse(message);
             $("#" + json.to).append($("#" + json.from).find("div"));
             // $("#" + json.name).css({left: json.coordX + offset.left, top: json.coordY + offset.top});
-        } else if (jQuery.type(message) === "string" && message.indexOf("Ok!") === -1 && message.indexOf("div") === -1) {
+        } else if (message.indexOf("{") !== -1 && message.indexOf("MoveNotification") !== -1) {
+            var json = JSON.parse(message);
+            $("#" + json.figureColor + "-moves").append(json.div);
+        } else if (message.indexOf("{") !== -1 && message.indexOf("Message") !== -1) {
+            var json = JSON.parse(message);
+            $("#msgs textarea").val($("#msgs textarea").val() + "\n" + (json.issuer + ": " + json.msg));
+        } else if (message.indexOf("{") !== -1 && message.indexOf("Typing") !== -1) {
+            var json = JSON.parse(message);
+            if (json.typing) {
+                $("#typing").fadeIn();
+            } else {
+                $("#typing").fadeOut();
+            }
+        } else if (message.indexOf("Ok!") === -1 && message.indexOf("session:") !== -1) {
             console.log(window.location.host + "/#" + message.substring('session:'.length, message.length));
+            // window.location.host = window.location.protocol + "//" + window.location.host + "/#" + message.substring('session:'.length, message.length);
             $("#gameTable").append(gameTable);
             myFigureColor = "white";
-        } else if (jQuery.type(message) === "string" && message.indexOf("Connected to opponent") !== -1) {
+        } else if (message.indexOf("Connected to opponent") !== -1) {
             $("#gameTable").append(gameTableVerse);
             myFigureColor = "black";
             console.log(message);
@@ -342,18 +374,47 @@ function connect() {
         } else if (message.indexOf("Opponent with id") !== -1) {
             console.log(message);
             addDnD();
-        } else if (jQuery.type(message) === "string" && message.indexOf("div") !== -1) {
-            var json = JSON.parse(message);
-            $("#" + json.figureColor + "-moves").append(json.div);
         }
     }
 
     websocket.onmessage = function (evt) {
         onMessage(evt)
     };
+
+    return websocket;
 }
 
 $(function () {
-    console.log("loaded");
-    connect();
+    var websocket = connect();
+    var typingCheck;
+    var isTyping = false;
+    var isSent = false;
+
+    typingCheck = setInterval(function () {
+        if (typingCheck != undefined) {
+            if (!isTyping && isSent) {
+                websocket.send(JSON.stringify(new Typing(false, "Typing")));
+                isSent = false;
+            }
+        }
+    }, 2000);
+
+    $("#inp input").keypress(function (event) {
+        if (event.which == 13) {
+            event.preventDefault();
+            websocket.send(JSON.stringify(new Message(myFigureColor, $("#inp input").val(), "Message")));
+            $("#inp input").val("");
+            return;
+        }
+
+        isTyping = true;
+        if (isTyping && !isSent) {
+            websocket.send(JSON.stringify(new Typing(true, "Typing")));
+            isSent = true;
+        }
+
+        setInterval(function () {
+            isTyping = false;
+        }, 1500);
+    })
 });

@@ -64,8 +64,16 @@ div[class^="mv-"] {
     color: #212121;
 }
 
-#black-moves span {
+#white-moves span {
     color: #FAFAFA;
+}
+
+#whiteTime span {
+    color: #FAFAFA;
+}
+
+#blackTime span {
+    color: #212121;
 }
 
 .draggable {

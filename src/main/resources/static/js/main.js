@@ -1,5 +1,18 @@
 var myFigureColor;
 var figureColors = ["white", "black"];
+var whiteInterval = undefined;
+var blackInterval = undefined;
+var whiteTime = 0;
+var blackTime = 0;
+var minutes;
+var seconds;
+var websocket;
+
+function str_pad_left(string, pad, length) {
+    return (new Array(length + 1).join(pad) + string).slice(-length);
+}
+
+// var finalTime = str_pad_left(minutes,'0',2)+':'+str_pad_left(seconds,'0',2);
 
 function Move(from, to, typeName) {
     this.typeName = typeName;
@@ -17,6 +30,12 @@ function Message(issuer, msg, typeName) {
     this.typeName = typeName;
     this.issuer = issuer;
     this.msg = msg;
+}
+
+function Time(color, time, typeName) {
+    this.typeName = typeName;
+    this.color = color;
+    this.time = time;
 }
 
 function Typing(typing, typeName) {
@@ -254,12 +273,44 @@ var gameTableVerse = '<div class="cemetery"><div class="cemetery-black" id="cb1"
     '        </tr>\n' +
     '    </table><div class="cemetery"><div class="cemetery-black" id="cb2"></div><div class="cemetery-white" id="cw2"></div></div>';
 
+function pauseTimer() {
+    if (myFigureColor === "white") {
+        clearInterval(whiteInterval);
+        whiteInterval = undefined;
+    } else {
+        clearInterval(blackInterval);
+        blackInterval = undefined;
+    }
+}
+
+function resumeTimer() {
+    if (myFigureColor === "black") {
+
+        blackInterval = setInterval(function () {
+            blackTime += 1;
+            minutes = Math.floor(blackTime / 60);
+            seconds = blackTime - minutes * 60;
+            websocket.send(JSON.stringify(new Time("black", str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2), "Time")));
+            $("#blackTime").html("<span class='time'>" + str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2) + "</span>");
+        }, 1000);
+    } else {
+
+        whiteInterval = setInterval(function () {
+            whiteTime += 1;
+            minutes = Math.floor(whiteTime / 60);
+            seconds = whiteTime - minutes * 60;
+            websocket.send(JSON.stringify(new Time("white", str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2), "Time")));
+            $("#whiteTime").html("<span class='time'>" + str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2) + "</span>");
+        }, 1000);
+    }
+}
+
 function connect() {
     var webSocketUrl = 'ws://' + window.location.host + '/websocket';
     if (window.location.hash.length !== 0) {
         webSocketUrl = webSocketUrl + "?opp=" + window.location.hash.substring(1, window.location.hash.length)
     }
-    var websocket = new WebSocket(webSocketUrl);
+    websocket = new WebSocket(webSocketUrl);
     var move; // chess move log (e2-e4)
 
     function addDnD() {
@@ -313,7 +364,6 @@ function connect() {
 
                 websocket.send(JSON.stringify(new Move(from, to, "Move")));
                 websocket.send(JSON.stringify(new MoveNotification(moveDiv, myFigureColor, "MoveNotification")));
-                console.log(myFigureColor + ": " + move);
             }
         });
 
@@ -322,6 +372,7 @@ function connect() {
             //     "ui-droppable-hover": "ui-state-hover"
             // },
             drop: function (event, ui) {
+                pauseTimer();
                 $(event.toElement).css({top: 0, left: 0});
                 $(this).append($(event.toElement));
                 var from = move;
@@ -330,27 +381,21 @@ function connect() {
                 $("#" + myFigureColor + "-moves").append(moveDiv);
                 websocket.send(JSON.stringify(new Move(from, $(this).attr("id"), "Move")));
                 websocket.send(JSON.stringify(new MoveNotification(moveDiv, myFigureColor, "MoveNotification")));
-                console.log(myFigureColor + ": " + move);
             }
         });
     }
 
-    var toCalss = function (obj, proto) {
-        obj.__proto__ = proto;
-        return obj;
-    };
-
     function onMessage(evt) {
         var message = evt.data;
-        // var res = toClass(JSON.parse(message), Messa)
-        if (message.indexOf("{") !== -1 && message.indexOf("Move") !== -1) { // message to move figure
+        if (message.indexOf("{") !== -1 && message.indexOf("MoveNotification") !== -1) {
+            resumeTimer();
+            var json = JSON.parse(message);
+            $("#" + json.figureColor + "-moves").append(json.div);
+        } else if (message.indexOf("{") !== -1 && message.indexOf("Move") !== -1) { // message to move figure
             // var offset = $("#gameTable").offset();
             var json = JSON.parse(message);
             $("#" + json.to).append($("#" + json.from).find("div"));
             // $("#" + json.name).css({left: json.coordX + offset.left, top: json.coordY + offset.top});
-        } else if (message.indexOf("{") !== -1 && message.indexOf("MoveNotification") !== -1) {
-            var json = JSON.parse(message);
-            $("#" + json.figureColor + "-moves").append(json.div);
         } else if (message.indexOf("{") !== -1 && message.indexOf("Message") !== -1) {
             var json = JSON.parse(message);
             $("#msgs textarea").val($("#msgs textarea").val() + "\n" + (json.issuer + ": " + json.msg));
@@ -361,19 +406,30 @@ function connect() {
             } else {
                 $("#typing").fadeOut();
             }
+        } else if (message.indexOf("{") !== -1 && message.indexOf("Time") !== -1) {
+            var json = JSON.parse(message);
+            if (json.color === "white") {
+                $("#whiteTime").html("<span class='time'>" + json.time + "</span>");
+            } else if (json.color === "black") {
+                $("#blackTime").html("<span class='time'>" + json.time + "</span>");
+            }
         } else if (message.indexOf("Ok!") === -1 && message.indexOf("session:") !== -1) {
             console.log(window.location.host + "/#" + message.substring('session:'.length, message.length));
-            // window.location.host = window.location.protocol + "//" + window.location.host + "/#" + message.substring('session:'.length, message.length);
             $("#gameTable").append(gameTable);
             myFigureColor = "white";
         } else if (message.indexOf("Connected to opponent") !== -1) {
             $("#gameTable").append(gameTableVerse);
             myFigureColor = "black";
-            console.log(message);
             addDnD();
         } else if (message.indexOf("Opponent with id") !== -1) {
-            console.log(message);
             addDnD();
+            whiteInterval = setInterval(function () {
+                whiteTime += 1;
+                minutes = Math.floor(whiteTime / 60);
+                seconds = whiteTime - minutes * 60;
+                websocket.send(JSON.stringify(new Time("white", str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2), "Time")));
+                $("#whiteTime").html("<span class='time'>" + str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2) + "</span>");
+            }, 1000);
         }
     }
 
@@ -389,6 +445,9 @@ $(function () {
     var typingCheck;
     var isTyping = false;
     var isSent = false;
+
+    $("#whiteTime").html("<span class='time'> 00.00 </span>");
+    $("#blackTime").html("<span class='time'> 00.00 </span>");
 
     typingCheck = setInterval(function () {
         if (typingCheck != undefined) {

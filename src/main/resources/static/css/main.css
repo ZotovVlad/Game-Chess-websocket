@@ -116,7 +116,7 @@ div[class^="mv-"] {
     height: 100%;
 }
 
-#msgs textarea {
+#chatMessages {
     width: 100%;
     height: 100%;
     resize: none;

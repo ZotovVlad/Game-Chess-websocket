@@ -398,7 +398,8 @@ function connect() {
             // $("#" + json.name).css({left: json.coordX + offset.left, top: json.coordY + offset.top});
         } else if (message.indexOf("{") !== -1 && message.indexOf("Message") !== -1) {
             var json = JSON.parse(message);
-            $("#msgs textarea").val($("#msgs textarea").val() + "\n" + (json.issuer + ": " + json.msg));
+            $("#chatMessages").val($("#chatMessages").val() + "\n" + (json.issuer + ": " + json.msg));
+            document.getElementById("chatMessages").scrollTop = document.getElementById("chatMessages").scrollHeight
         } else if (message.indexOf("{") !== -1 && message.indexOf("Typing") !== -1) {
             var json = JSON.parse(message);
             if (json.typing) {
@@ -462,7 +463,9 @@ $(function () {
         if (event.which == 13) {
             event.preventDefault();
             websocket.send(JSON.stringify(new Message(myFigureColor, $("#inp input").val(), "Message")));
+            $("#chatMessages").val($("#chatMessages").val() + "\n" + (myFigureColor + ": " + $("#inp input").val()));
             $("#inp input").val("");
+            document.getElementById("chatMessages").scrollTop = document.getElementById("chatMessages").scrollHeight;
             return;
         }
 

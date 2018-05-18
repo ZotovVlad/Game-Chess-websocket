@@ -25,8 +25,8 @@ public class SessionService {
         return sessionController.getOpponentBySessionId(sessionId);
     }
 
-    public void removeSessionRecordBySessionId(String sessionId) {
-        sessionController.removeSessionRecordBysessionId(sessionId);
+    public void removeSession(WebSocketSession session) {
+        sessionController.removeSession(session);
     }
 
     public int getSessionsOnline() {

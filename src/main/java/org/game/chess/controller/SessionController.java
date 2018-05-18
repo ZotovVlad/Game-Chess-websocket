@@ -43,8 +43,9 @@ public class SessionController {
         return sessions.keySet().stream().filter(webSocketSession -> webSocketSession.getId().equals(sessionId)).findFirst().orElse(null);
     }
 
-    public void removeSessionRecordBysessionId(String sessionId) {
-        sessions.remove(sessionId);
+    public void removeSession(WebSocketSession session) {
+        sessions.values().removeAll(Collections.singleton(session));
+        sessions.remove(session);
     }
 
     public int getSessionsOnline() {

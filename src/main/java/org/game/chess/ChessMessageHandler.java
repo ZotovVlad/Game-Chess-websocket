@@ -24,7 +24,7 @@ public class ChessMessageHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
         // The WebSocket has been closed
         log.info("Connection closed. Session id " + session.getId() + " reason " + status.getReason());
-        sessionService.removeSessionRecordBySessionId(session.getId());
+        sessionService.removeSession(session);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ChessMessageHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage textMessage) throws IOException {
         // A message has been received
-        log.info("Message received: " + textMessage.getPayload());
+//        log.info("Message received: " + textMessage.getPayload());
         WebSocketSession opponentSession = sessionService.getOpponentForSessionBySessionId(session.getId());
         if (opponentSession != null) {
             opponentSession.sendMessage(textMessage);

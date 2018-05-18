@@ -34,6 +34,28 @@ div[class^="cemetery-"] {
     font-size: 50px;
 }
 
+div[class^="mv-"] {
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+
+.moves span {
+    width: 50%;
+    float: left;
+    text-align: center;
+    font-size: x-large;
+    text-decoration: underline;
+}
+
+#black-moves span {
+    color: #212121;
+}
+
+#black-moves span {
+    color: #FAFAFA;
+}
+
 .draggable {
     cursor: pointer;
 }
@@ -42,4 +64,39 @@ div[class^="cemetery-"] {
     width: 800px;
     height: 600px;
     margin: 0 auto;
+    float: left;
+}
+
+.moves {
+    width: 200px;
+    height: 600px;
+    float: left;
+}
+
+#chat {
+    width: 430px;
+    height: 600px;
+    float: right;
+}
+
+#msgs {
+    width: 430px;
+    height: 550px;
+    float: right;
+}
+
+#inp {
+    width: 430px;
+    height: 50px;
+    float: right;
+}
+
+#inp input {
+    width: 100%;
+    height: 100%;
+}
+
+#msgs input {
+    width: 100%;
+    height: 100%;
 }

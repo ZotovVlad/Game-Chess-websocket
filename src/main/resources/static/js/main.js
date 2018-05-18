@@ -1,55 +1,57 @@
-var stompClient = null;
+var myFigureColor;
+var figureColors = ["white", "black"];
+
 var gameTable = '<div class="cemetery"><div class="cemetery-white" id="cw1"></div><div class="cemetery-black" id="cb1"></div></div><table>\n' +
     '        <tr>\n' +
     '            <td id="a8">\n' +
-    '                <div id="black-rock1" class="draggable">&#9820;</div>\n' +
+    '                <div id="black-rock1" class="draggable black">&#9820;</div>\n' +
     '            </td>\n' +
     '            <td id="b8">\n' +
-    '                <div id="black-knight1" class="draggable">&#9822;</div>\n' +
+    '                <div id="black-knight1" class="draggable black">&#9822;</div>\n' +
     '            </td>\n' +
     '            <td id="c8">\n' +
-    '                <div id="black-bishop1" class="draggable">&#9821;</div>\n' +
+    '                <div id="black-bishop1" class="draggable black">&#9821;</div>\n' +
     '            </td>\n' +
     '            <td id="d8">\n' +
-    '                <div id="black-queen" class="draggable">&#9819;</div>\n' +
+    '                <div id="black-queen" class="draggable black">&#9819;</div>\n' +
     '            </td>\n' +
     '            <td id="e8">\n' +
-    '                <div id="black-king" class="draggable">&#9818;</div>\n' +
+    '                <div id="black-king" class="draggable black">&#9818;</div>\n' +
     '            </td>\n' +
     '            <td id="f8">\n' +
-    '                <div id="black-bishop2" class="draggable">&#9821;</div>\n' +
+    '                <div id="black-bishop2" class="draggable black">&#9821;</div>\n' +
     '            </td>\n' +
     '            <td id="g8">\n' +
-    '                <div id="black-knight2" class="draggable">&#9822;</div>\n' +
+    '                <div id="black-knight2" class="draggable black">&#9822;</div>\n' +
     '            </td>\n' +
     '            <td id="h8">\n' +
-    '                <div id="black-rack2" class="draggable">&#9820;</div>\n' +
+    '                <div id="black-rack2" class="draggable black">&#9820;</div>\n' +
     '            </td>\n' +
     '        </tr>\n' +
     '        <tr>\n' +
     '            <td id="a7">\n' +
-    '                <div id="black-pawn1" class="draggable">&#9823;</div>\n' +
+    '                <div id="black-pawn1" class="draggable black">&#9823;</div>\n' +
     '            </td>\n' +
     '            <td id="b7">\n' +
-    '                <div id="black-pawn2" class="draggable">&#9823;</div>\n' +
+    '                <div id="black-pawn2" class="draggable black">&#9823;</div>\n' +
     '            </td>\n' +
     '            <td id="c7">\n' +
-    '                <div id="black-pawn3" class="draggable">&#9823;</div>\n' +
+    '                <div id="black-pawn3" class="draggable black">&#9823;</div>\n' +
     '            </td>\n' +
     '            <td id="d7">\n' +
-    '                <div id="black-pawn4" class="draggable">&#9823;</div>\n' +
+    '                <div id="black-pawn4" class="draggable black">&#9823;</div>\n' +
     '            </td>\n' +
     '            <td id="e7">\n' +
-    '                <div id="black-pawn5" class="draggable">&#9823;</div>\n' +
+    '                <div id="black-pawn5" class="draggable black">&#9823;</div>\n' +
     '            </td>\n' +
     '            <td id="f7">\n' +
-    '                <div id="black-pawn6" class="draggable">&#9823;</div>\n' +
+    '                <div id="black-pawn6" class="draggable black">&#9823;</div>\n' +
     '            </td>\n' +
     '            <td id="g7">\n' +
-    '                <div id="black-pawn7" class="draggable">&#9823;</div>\n' +
+    '                <div id="black-pawn7" class="draggable black">&#9823;</div>\n' +
     '            </td>\n' +
     '            <td id="h7">\n' +
-    '                <div id="black-pawn8" class="draggable">&#9823;</div>\n' +
+    '                <div id="black-pawn8" class="draggable black">&#9823;</div>\n' +
     '            </td>\n' +
     '        </tr>\n' +
     '        <tr>\n' +
@@ -94,78 +96,78 @@ var gameTable = '<div class="cemetery"><div class="cemetery-white" id="cw1"></di
     '        </tr>\n' +
     '        <tr>\n' +
     '            <td id="a2">\n' +
-    '                <div id="white-pawn1" class="draggable">&#9817;</div>\n' +
+    '                <div id="white-pawn1" class="draggable white">&#9817;</div>\n' +
     '            </td>\n' +
     '            <td id="b2">\n' +
-    '                <div id="white-pawn2" class="draggable">&#9817;</div>\n' +
+    '                <div id="white-pawn2" class="draggable white">&#9817;</div>\n' +
     '            </td>\n' +
     '            <td id="c2">\n' +
-    '                <div id="white-pawn3" class="draggable">&#9817;</div>\n' +
+    '                <div id="white-pawn3" class="draggable white">&#9817;</div>\n' +
     '            </td>\n' +
     '            <td id="d2">\n' +
-    '                <div id="white-pawn4" class="draggable">&#9817;</div>\n' +
+    '                <div id="white-pawn4" class="draggable white">&#9817;</div>\n' +
     '            </td>\n' +
     '            <td id="e2">\n' +
-    '                <div id="white-pawn5" class="draggable">&#9817;</div>\n' +
+    '                <div id="white-pawn5" class="draggable white">&#9817;</div>\n' +
     '            </td>\n' +
     '            <td id="f2">\n' +
-    '                <div id="white-pawn6" class="draggable">&#9817;</div>\n' +
+    '                <div id="white-pawn6" class="draggable white">&#9817;</div>\n' +
     '            </td>\n' +
     '            <td id="g2">\n' +
-    '                <div id="white-pawn7" class="draggable">&#9817;</div>\n' +
+    '                <div id="white-pawn7" class="draggable white">&#9817;</div>\n' +
     '            </td>\n' +
     '            <td id="h2">\n' +
-    '                <div id="white-pawn8" class="draggable">&#9817;</div>\n' +
+    '                <div id="white-pawn8" class="draggable white">&#9817;</div>\n' +
     '            </td>\n' +
     '        </tr>\n' +
     '        <tr>\n' +
     '            <td id="a1">\n' +
-    '                <div id="white-rock1" class="draggable">&#9814;</div>\n' +
+    '                <div id="white-rock1" class="draggable white">&#9814;</div>\n' +
     '            </td>\n' +
     '            <td id="b1">\n' +
-    '                <div id="white-knight1" class="draggable">&#9816;</div>\n' +
+    '                <div id="white-knight1" class="draggable white">&#9816;</div>\n' +
     '            </td>\n' +
     '            <td id="c1">\n' +
-    '                <div id="white-bishop1" class="draggable">&#9815;</div>\n' +
+    '                <div id="white-bishop1" class="draggable white">&#9815;</div>\n' +
     '            </td>\n' +
     '            <td id="d1">\n' +
-    '                <div id="white-queen" class="draggable">&#9813;</div>\n' +
+    '                <div id="white-queen" class="draggable white">&#9813;</div>\n' +
     '            </td>\n' +
     '            <td id="e1">\n' +
-    '                <div id="white-king" class="draggable">&#9812;</div>\n' +
+    '                <div id="white-king" class="draggable white">&#9812;</div>\n' +
     '            </td>\n' +
     '            <td id="f1">\n' +
-    '                <div id="white-bishop2" class="draggable">&#9815;</div>\n' +
+    '                <div id="white-bishop2" class="draggable white">&#9815;</div>\n' +
     '            </td>\n' +
     '            <td id="g1">\n' +
-    '                <div id="white-knight2" class="draggable">&#9816;</div>\n' +
+    '                <div id="white-knight2" class="draggable white">&#9816;</div>\n' +
     '            </td>\n' +
     '            <td id="h1">\n' +
-    '                <div id="white-rack2" class="draggable">&#9814;</div>\n' +
+    '                <div id="white-rack2" class="draggable white">&#9814;</div>\n' +
     '            </td>\n' +
     '        </tr>\n' +
     '    </table><div class="cemetery"><div class="cemetery-white" id="cw2"></div><div class="cemetery-black" id="cb2"></div></div>';
 
 var gameTableVerse = '<div class="cemetery"><div class="cemetery-black" id="cb1"></div><div class="cemetery-white" id="cw1"></div></div><table>\n' +
     '        <tr>\n' +
-    '            <td id="h1"><div id="white-rack2" class="draggable">&#9814;</div></td>\n' +
-    '            <td id="g1"><div id="white-knight2" class="draggable">&#9816;</div></td>\n' +
-    '            <td id="f1"><div id="white-bishop2" class="draggable">&#9815;</div></td>\n' +
-    '            <td id="e1"><div id="white-king" class="draggable">&#9812;</div></td>\n' +
-    '            <td id="d1"><div id="white-queen" class="draggable">&#9813;</div></td>\n' +
-    '            <td id="c1"><div id="white-bishop1" class="draggable">&#9815;</div></td>\n' +
-    '            <td id="b1"><div id="white-knight1" class="draggable">&#9816;</div></td>\n' +
-    '            <td id="a1"><div id="white-rock1" class="draggable">&#9814;</div></td>\n' +
+    '            <td id="h1"><div id="white-rack2" class="draggable white">&#9814;</div></td>\n' +
+    '            <td id="g1"><div id="white-knight2" class="draggable white">&#9816;</div></td>\n' +
+    '            <td id="f1"><div id="white-bishop2" class="draggable white">&#9815;</div></td>\n' +
+    '            <td id="e1"><div id="white-king" class="draggable white">&#9812;</div></td>\n' +
+    '            <td id="d1"><div id="white-queen" class="draggable white">&#9813;</div></td>\n' +
+    '            <td id="c1"><div id="white-bishop1" class="draggable white">&#9815;</div></td>\n' +
+    '            <td id="b1"><div id="white-knight1" class="draggable white">&#9816;</div></td>\n' +
+    '            <td id="a1"><div id="white-rock1" class="draggable white">&#9814;</div></td>\n' +
     '        </tr>\n' +
     '        <tr>\n' +
-    '            <td id="h2"><div id="white-pawn8" class="draggable">&#9817;</div></td>\n' +
-    '            <td id="g2"><div id="white-pawn7" class="draggable">&#9817;</div></td>\n' +
-    '            <td id="f2"><div id="white-pawn6" class="draggable">&#9817;</div></td>\n' +
-    '            <td id="e2"><div id="white-pawn5" class="draggable">&#9817;</div></td>\n' +
-    '            <td id="d2"><div id="white-pawn4" class="draggable">&#9817;</div></td>\n' +
-    '            <td id="c2"><div id="white-pawn3" class="draggable">&#9817;</div></td>\n' +
-    '            <td id="b2"><div id="white-pawn2" class="draggable">&#9817;</div></td>\n' +
-    '            <td id="a2"><div id="white-pawn1" class="draggable">&#9817;</div></td>\n' +
+    '            <td id="h2"><div id="white-pawn8" class="draggable white">&#9817;</div></td>\n' +
+    '            <td id="g2"><div id="white-pawn7" class="draggable white">&#9817;</div></td>\n' +
+    '            <td id="f2"><div id="white-pawn6" class="draggable white">&#9817;</div></td>\n' +
+    '            <td id="e2"><div id="white-pawn5" class="draggable white">&#9817;</div></td>\n' +
+    '            <td id="d2"><div id="white-pawn4" class="draggable white">&#9817;</div></td>\n' +
+    '            <td id="c2"><div id="white-pawn3" class="draggable white">&#9817;</div></td>\n' +
+    '            <td id="b2"><div id="white-pawn2" class="draggable white">&#9817;</div></td>\n' +
+    '            <td id="a2"><div id="white-pawn1" class="draggable white">&#9817;</div></td>\n' +
     '        </tr>\n' +
     '        <tr>\n' +
     '            <td id="h3"></td>\n' +
@@ -208,24 +210,24 @@ var gameTableVerse = '<div class="cemetery"><div class="cemetery-black" id="cb1"
     '            <td id="a6"></td>\n' +
     '        </tr>\n' +
     '        <tr>\n' +
-    '            <td id="h7"><div id="black-pawn8" class="draggable">&#9823;</div></td>\n' +
-    '            <td id="g7"><div id="black-pawn7" class="draggable">&#9823;</div></td>\n' +
-    '            <td id="f7"><div id="black-pawn6" class="draggable">&#9823;</div></td>\n' +
-    '            <td id="e7"><div id="black-pawn5" class="draggable">&#9823;</div></td>\n' +
-    '            <td id="d7"><div id="black-pawn4" class="draggable">&#9823;</div></td>\n' +
-    '            <td id="c7"><div id="black-pawn3" class="draggable">&#9823;</div></td>\n' +
-    '            <td id="b7"><div id="black-pawn2" class="draggable">&#9823;</div></td>\n' +
-    '            <td id="a7"><div id="black-pawn1" class="draggable">&#9823;</div></td>\n' +
+    '            <td id="h7"><div id="black-pawn8" class="draggable black">&#9823;</div></td>\n' +
+    '            <td id="g7"><div id="black-pawn7" class="draggable black">&#9823;</div></td>\n' +
+    '            <td id="f7"><div id="black-pawn6" class="draggable black">&#9823;</div></td>\n' +
+    '            <td id="e7"><div id="black-pawn5" class="draggable black">&#9823;</div></td>\n' +
+    '            <td id="d7"><div id="black-pawn4" class="draggable black">&#9823;</div></td>\n' +
+    '            <td id="c7"><div id="black-pawn3" class="draggable black">&#9823;</div></td>\n' +
+    '            <td id="b7"><div id="black-pawn2" class="draggable black">&#9823;</div></td>\n' +
+    '            <td id="a7"><div id="black-pawn1" class="draggable black">&#9823;</div></td>\n' +
     '        </tr>\n' +
     '        <tr>\n' +
-    '            <td id="h8"><div id="black-rack2" class="draggable">&#9820;</div></td>\n' +
-    '            <td id="g8"><div id="black-knight2" class="draggable">&#9822;</div></td>\n' +
-    '            <td id="f8"><div id="black-bishop2" class="draggable">&#9821;</div></td>\n' +
-    '            <td id="e8"><div id="black-king" class="draggable">&#9818;</div></td>\n' +
-    '            <td id="d8"><div id="black-queen" class="draggable">&#9819;</div></td>\n' +
-    '            <td id="c8"><div id="black-bishop1" class="draggable">&#9821;</div></td>\n' +
-    '            <td id="b8"><div id="black-knight1" class="draggable">&#9822;</div></td>\n' +
-    '            <td id="a8"><div id="black-rock1" class="draggable">&#9820;</div></td>\n' +
+    '            <td id="h8"><div id="black-rack2" class="draggable black">&#9820;</div></td>\n' +
+    '            <td id="g8"><div id="black-knight2" class="draggable black">&#9822;</div></td>\n' +
+    '            <td id="f8"><div id="black-bishop2" class="draggable black">&#9821;</div></td>\n' +
+    '            <td id="e8"><div id="black-king" class="draggable black">&#9818;</div></td>\n' +
+    '            <td id="d8"><div id="black-queen" class="draggable black">&#9819;</div></td>\n' +
+    '            <td id="c8"><div id="black-bishop1" class="draggable black">&#9821;</div></td>\n' +
+    '            <td id="b8"><div id="black-knight1" class="draggable black">&#9822;</div></td>\n' +
+    '            <td id="a8"><div id="black-rock1" class="draggable black">&#9820;</div></td>\n' +
     '        </tr>\n' +
     '    </table><div class="cemetery"><div class="cemetery-black" id="cb2"></div><div class="cemetery-white" id="cw2"></div></div>';
 
@@ -238,7 +240,7 @@ function connect() {
     var move; // chess move log (e2-e4)
 
     function addDnD() {
-        $(".draggable").draggable({
+        $(".draggable." + myFigureColor).draggable({
             start: function (event, ui) {
                 move = $(this).parents("td").attr("id");
             },
@@ -283,11 +285,17 @@ function connect() {
 
                 var from = move;
                 move = move + " - X";
+                var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
+                $("#" + myFigureColor + "-moves").append(moveDiv);
                 websocket.send(JSON.stringify({
                     'from': from,
                     'to': to
                 }));
-                console.log(move);
+                websocket.send(JSON.stringify({
+                    'div': moveDiv,
+                    'figureColor': myFigureColor
+                }));
+                console.log(myFigureColor + ": " + move);
             }
         });
 
@@ -300,32 +308,43 @@ function connect() {
                 $(this).append($(event.toElement));
                 var from = move;
                 move = move + " - " + $(this).attr("id");
+                var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
+                $("#" + myFigureColor + "-moves").append(moveDiv);
                 websocket.send(JSON.stringify({
                     'from': from,
                     'to': $(this).attr("id")
                 }));
-                console.log(move);
+                websocket.send(JSON.stringify({
+                    'div': moveDiv,
+                    'figureColor': myFigureColor
+                }));
+                console.log(myFigureColor + ": " + move);
             }
         });
     }
 
     function onMessage(evt) {
         var message = evt.data;
-        if (jQuery.type(message) === "string" && message.indexOf("{") !== -1) {
-            var offset = $("#gameTable").offset();
+        if (jQuery.type(message) === "string" && message.indexOf("{") !== -1 && message.indexOf("div") === -1) { // message to move figure
+            // var offset = $("#gameTable").offset();
             var json = JSON.parse(message);
             $("#" + json.to).append($("#" + json.from).find("div"));
             // $("#" + json.name).css({left: json.coordX + offset.left, top: json.coordY + offset.top});
-        } else if (jQuery.type(message) === "string" && message.indexOf("Ok!") === -1) {
+        } else if (jQuery.type(message) === "string" && message.indexOf("Ok!") === -1 && message.indexOf("div") === -1) {
             console.log(window.location.host + "/#" + message.substring('session:'.length, message.length));
             $("#gameTable").append(gameTable);
+            myFigureColor = "white";
         } else if (jQuery.type(message) === "string" && message.indexOf("Connected to opponent") !== -1) {
             $("#gameTable").append(gameTableVerse);
+            myFigureColor = "black";
             console.log(message);
             addDnD();
         } else if (message.indexOf("Opponent with id") !== -1) {
             console.log(message);
             addDnD();
+        } else if (jQuery.type(message) === "string" && message.indexOf("div") !== -1) {
+            var json = JSON.parse(message);
+            $("#" + json.figureColor + "-moves").append(json.div);
         }
     }
 

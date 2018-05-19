@@ -497,12 +497,12 @@ $(function () {
         }
     }, 2000);
 
-    $("#inp input").keypress(function (event) {
+    $("#inp textarea").keypress(function (event) {
         if (event.which === 13) {
             event.preventDefault();
-            websocket.send(JSON.stringify(new Message(myFigureColor, $("#inp input").val(), "Message")));
-            $("#chatMessages").val($("#chatMessages").val() + "\n" + (myFigureColor + ": " + $("#inp input").val()));
-            $("#inp input").val("");
+            websocket.send(JSON.stringify(new Message(myFigureColor, $("#inp textarea").val(), "Message")));
+            $("#chatMessages").val($("#chatMessages").val() + "\n" + (myFigureColor + ": " + $("#inp textarea").val()));
+            $("#inp textarea").val("");
             document.getElementById("chatMessages").scrollTop = document.getElementById("chatMessages").scrollHeight;
             return;
         }

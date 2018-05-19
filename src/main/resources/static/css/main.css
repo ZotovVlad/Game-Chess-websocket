@@ -92,9 +92,10 @@ div[class^="mv-"] {
     float: right;
 }
 
-#inp input {
+#inp textarea {
     width: 100%;
     height: 100%;
+    resize: none;
 }
 
 #chatMessages {

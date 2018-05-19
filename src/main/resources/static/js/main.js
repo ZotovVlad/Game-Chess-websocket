@@ -482,10 +482,12 @@ $(function () {
     $("#whiteTime").html("<span class='time'> 00.00 </span>");
     $("#blackTime").html("<span class='time'> 00.00 </span>");
 
+    var typingInterval;
     setInterval(function () {
         if (!isTyping && isSent) {
             websocket.send(JSON.stringify(new Typing(false, "Typing")));
             isSent = false;
+            clearInterval(typingInterval);
         }
     }, 2000);
 
@@ -505,23 +507,28 @@ $(function () {
             isSent = true;
         }
 
-        setInterval(function () {
+        typingInterval = setInterval(function () {
             isTyping = false;
         }, 1500);
     });
 });
 
 window.addEventListener("resize", function () {
-    $(".divTable").css({"height": $(".divTable").width()});
-    $("#gameTable").css({"height": $(".divTable").width()});
-    $("#main-chess").css({"height": $(".divTable").width()});
-    $("#chat").css({"height": $(".divTable").width()});
+    $(".divTable").css({"height": $(".divTable").width() + "px"});
+    $("#gameTable").css({"height": $(".divTable").width() + "px"});
+    $("#main-chess").css({"height": $(".divTable").width() + "px"});
+    $("#chat").css({"height": $(".divTable").width() + "px"});
 }, false);
 
 $(window).on('load', function () {
-    $(".divTable").css({"height": $(".divTable").width()});
-    $("#gameTable").css({"height": $(".divTable").width()});
-    $("#main-chess").css({"height": $(".divTable").width()});
-    $("#chat").css({"height": $(".divTable").width()});
-    $("#content").css("visibility", "visible")
+
+    var layoutInterval;
+    layoutInterval = setInterval(function () {
+        $(".divTable").css({"height": $(".divTable").width() + "px"});
+        $("#gameTable").css({"height": $(".divTable").width() + "px"});
+        $("#main-chess").css({"height": $(".divTable").width() + "px"});
+        $("#chat").css({"height": $(".divTable").width() + "px"});
+        clearInterval(layoutInterval);
+    }, 30);
+
 });

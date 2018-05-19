@@ -529,6 +529,6 @@ $(window).on('load', function () {
         $("#main-chess").css({"height": $(".divTable").width() + "px"});
         $("#chat").css({"height": $(".divTable").width() + "px"});
         clearInterval(layoutInterval);
-    }, 30);
+    }, 1000);
 
 });

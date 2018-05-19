@@ -509,11 +509,6 @@ $(function () {
             isTyping = false;
         }, 1500);
     });
-
-    $(".divTable").css({"height": $(".divTable").width()});
-    $("#gameTable").css({"height": $(".divTable").width()});
-    $("#main-chess").css({"height": $(".divTable").width()});
-    $("#chat").css({"height": $(".divTable").width()});
 });
 
 window.addEventListener("resize", function () {
@@ -522,3 +517,10 @@ window.addEventListener("resize", function () {
     $("#main-chess").css({"height": $(".divTable").width()});
     $("#chat").css({"height": $(".divTable").width()});
 }, false);
+
+$(window).on('load', function () {
+    $(".divTable").css({"height": $(".divTable").width()});
+    $("#gameTable").css({"height": $(".divTable").width()});
+    $("#main-chess").css({"height": $(".divTable").width()});
+    $("#chat").css({"height": $(".divTable").width()});
+});

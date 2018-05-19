@@ -44,39 +44,39 @@ function Typing(typing, typeName) {
 var gameTable = '<div class="cemetery"><div class="cemetery-white" id="cw1"></div><div class="cemetery-black" id="cb1"></div></div><div class="divTable">\n' +
     '<div class="divTableBody">\n' +
     '<div class="divTableRow">\n' +
-    '<div class="divTableCell" id="a8"><div id="black-rock1" class="draggable black">♜</div>\n' +
+    '<div class="divTableCell" id="a8"><div id="black-rock1" class="draggable black">&#9820;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="b8"><div id="black-knight1" class="draggable black">♞</div>\n' +
+    '<div class="divTableCell" id="b8"><div id="black-knight1" class="draggable black">&#9822;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="c8"><div id="black-bishop1" class="draggable black">♝</div>\n' +
+    '<div class="divTableCell" id="c8"><div id="black-bishop1" class="draggable black">&#9821;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="d8"><div id="black-queen" class="draggable black">♛</div>\n' +
+    '<div class="divTableCell" id="d8"><div id="black-queen" class="draggable black">&#9819;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="e8"><div id="black-king" class="draggable black">♚</div>\n' +
+    '<div class="divTableCell" id="e8"><div id="black-king" class="draggable black">&#9818;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="f8"><div id="black-bishop2" class="draggable black">♝</div>\n' +
+    '<div class="divTableCell" id="f8"><div id="black-bishop2" class="draggable black">&#9821;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="g8"><div id="black-knight2" class="draggable black">♞</div>\n' +
+    '<div class="divTableCell" id="g8"><div id="black-knight2" class="draggable black">&#9822;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="h8"><div id="black-rack2" class="draggable black">♜</div>\n' +
+    '<div class="divTableCell" id="h8"><div id="black-rack2" class="draggable black">&#9820;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '<div class="divTableRow">\n' +
-    '<div class="divTableCell" id="a7"><div id="black-pawn1" class="draggable black">♟</div>\n' +
+    '<div class="divTableCell" id="a7"><div id="black-pawn1" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="b7"><div id="black-pawn2" class="draggable black">♟</div>\n' +
+    '<div class="divTableCell" id="b7"><div id="black-pawn2" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="c7"><div id="black-pawn3" class="draggable black">♟</div>\n' +
+    '<div class="divTableCell" id="c7"><div id="black-pawn3" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="d7"><div id="black-pawn4" class="draggable black">♟</div>\n' +
+    '<div class="divTableCell" id="d7"><div id="black-pawn4" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="e7"><div id="black-pawn5" class="draggable black">♟</div>\n' +
+    '<div class="divTableCell" id="e7"><div id="black-pawn5" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="f7"><div id="black-pawn6" class="draggable black">♟</div>\n' +
+    '<div class="divTableCell" id="f7"><div id="black-pawn6" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="g7"><div id="black-pawn7" class="draggable black">♟</div>\n' +
+    '<div class="divTableCell" id="g7"><div id="black-pawn7" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="h7"><div id="black-pawn8" class="draggable black">♟</div>\n' +
+    '<div class="divTableCell" id="h7"><div id="black-pawn8" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '<div class="divTableRow">\n' +
@@ -120,39 +120,39 @@ var gameTable = '<div class="cemetery"><div class="cemetery-white" id="cw1"></di
     '<div class="divTableCell" id="h3">&nbsp;</div>\n' +
     '</div>\n' +
     '<div class="divTableRow">\n' +
-    '<div class="divTableCell" id="a2"><div id="white-pawn1" class="draggable white">♙</div>\n' +
+    '<div class="divTableCell" id="a2"><div id="white-pawn1" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="b2"><div id="white-pawn2" class="draggable white">♙</div>\n' +
+    '<div class="divTableCell" id="b2"><div id="white-pawn2" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="c2"><div id="white-pawn3" class="draggable white">♙</div>\n' +
+    '<div class="divTableCell" id="c2"><div id="white-pawn3" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="d2"><div id="white-pawn4" class="draggable white">♙</div>\n' +
+    '<div class="divTableCell" id="d2"><div id="white-pawn4" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="e2"><div id="white-pawn5" class="draggable white">♙</div>\n' +
+    '<div class="divTableCell" id="e2"><div id="white-pawn5" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="f2"><div id="white-pawn6" class="draggable white">♙</div>\n' +
+    '<div class="divTableCell" id="f2"><div id="white-pawn6" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="g2"><div id="white-pawn7" class="draggable white">♙</div>\n' +
+    '<div class="divTableCell" id="g2"><div id="white-pawn7" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="h2"><div id="white-pawn8" class="draggable white">♙</div>\n' +
+    '<div class="divTableCell" id="h2"><div id="white-pawn8" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '<div class="divTableRow">\n' +
-    '<div class="divTableCell" id="a1"><div id="white-rock1" class="draggable white">♖</div>\n' +
+    '<div class="divTableCell" id="a1"><div id="white-rock1" class="draggable white">&#9814;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="b1"><div id="white-knight1" class="draggable white">♘</div>\n' +
+    '<div class="divTableCell" id="b1"><div id="white-knight1" class="draggable white">&#9816;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="c1"><div id="white-bishop1" class="draggable white">♗</div>\n' +
+    '<div class="divTableCell" id="c1"><div id="white-bishop1" class="draggable white">&#9815;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="d1"><div id="white-queen" class="draggable white">♕</div>\n' +
+    '<div class="divTableCell" id="d1"><div id="white-queen" class="draggable white">&#9813;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="e1"><div id="white-king" class="draggable white">♔</div>\n' +
+    '<div class="divTableCell" id="e1"><div id="white-king" class="draggable white">&#9812;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="f1"><div id="white-bishop2" class="draggable white">♗</div>\n' +
+    '<div class="divTableCell" id="f1"><div id="white-bishop2" class="draggable white">&#9815;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="g1"><div id="white-knight2" class="draggable white">♘</div>\n' +
+    '<div class="divTableCell" id="g1"><div id="white-knight2" class="draggable white">&#9816;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="h1"><div id="white-rack2" class="draggable white">♖</div>\n' +
+    '<div class="divTableCell" id="h1"><div id="white-rack2" class="draggable white">&#9814;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '</div>\n' +
@@ -162,54 +162,54 @@ var gameTableVerse = '<div class="cemetery"><div class="cemetery-black" id="cb1"
     '<div class="divTableBody">\n' +
     '<div class="divTableRow">\n' +
     '<div class="divTableCell" id="h1">\n' +
-    '<div id="white-rack2" class="draggable white">♖</div>\n' +
+    '<div id="white-rack2" class="draggable white">&#9814;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="g1">\n' +
-    '<div id="white-knight2" class="draggable white">♘</div>\n' +
+    '<div id="white-knight2" class="draggable white">&#9816;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="f1">\n' +
-    '<div id="white-bishop2" class="draggable white">♗</div>\n' +
+    '<div id="white-bishop2" class="draggable white">&#9815;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="e1">\n' +
-    '<div id="white-king" class="draggable white">♔</div>\n' +
+    '<div id="white-king" class="draggable white">&#9812;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="d1">\n' +
-    '<div id="white-queen" class="draggable white">♕</div>\n' +
+    '<div id="white-queen" class="draggable white">&#9813;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="c1">\n' +
-    '<div id="white-bishop1" class="draggable white">♗</div>\n' +
+    '<div id="white-bishop1" class="draggable white">&#9815;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="b1">\n' +
-    '<div id="white-knight1" class="draggable white">♘</div>\n' +
+    '<div id="white-knight1" class="draggable white">&#9816;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="a1">\n' +
-    '<div id="white-rock1" class="draggable white">♖</div>\n' +
+    '<div id="white-rock1" class="draggable white">&#9814;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '<div class="divTableRow">\n' +
     '<div class="divTableCell" id="h2">\n' +
-    '<div id="white-pawn8" class="draggable white">♙</div>\n' +
+    '<div id="white-pawn8" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="g2">\n' +
-    '<div id="white-pawn7" class="draggable white">♙</div>\n' +
+    '<div id="white-pawn7" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="f2">\n' +
-    '<div id="white-pawn6" class="draggable white">♙</div>\n' +
+    '<div id="white-pawn6" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="e2">\n' +
-    '<div id="white-pawn5" class="draggable white">♙</div>\n' +
+    '<div id="white-pawn5" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="d2">\n' +
-    '<div id="white-pawn4" class="draggable white">♙</div>\n' +
+    '<div id="white-pawn4" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="c2">\n' +
-    '<div id="white-pawn3" class="draggable white">♙</div>\n' +
+    '<div id="white-pawn3" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="b2">\n' +
-    '<div id="white-pawn2" class="draggable white">♙</div>\n' +
+    '<div id="white-pawn2" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="a2">\n' +
-    '<div id="white-pawn1" class="draggable white">♙</div>\n' +
+    '<div id="white-pawn1" class="draggable white">&#9817;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '<div class="divTableRow">\n' +
@@ -254,54 +254,54 @@ var gameTableVerse = '<div class="cemetery"><div class="cemetery-black" id="cb1"
     '</div>\n' +
     '<div class="divTableRow">\n' +
     '<div class="divTableCell" id="h7">\n' +
-    '<div id="black-pawn8" class="draggable black">♟</div>\n' +
+    '<div id="black-pawn8" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="g7">\n' +
-    '<div id="black-pawn7" class="draggable black">♟</div>\n' +
+    '<div id="black-pawn7" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="f7">\n' +
-    '<div id="black-pawn6" class="draggable black">♟</div>\n' +
+    '<div id="black-pawn6" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="e7">\n' +
-    '<div id="black-pawn5" class="draggable black">♟</div>\n' +
+    '<div id="black-pawn5" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="d7">\n' +
-    '<div id="black-pawn4" class="draggable black">♟</div>\n' +
+    '<div id="black-pawn4" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="c7">\n' +
-    '<div id="black-pawn3" class="draggable black">♟</div>\n' +
+    '<div id="black-pawn3" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="b7">\n' +
-    '<div id="black-pawn2" class="draggable black">♟</div>\n' +
+    '<div id="black-pawn2" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="a7">\n' +
-    '<div id="black-pawn1" class="draggable black">♟</div>\n' +
+    '<div id="black-pawn1" class="draggable black">&#9823;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '<div class="divTableRow">\n' +
     '<div class="divTableCell" id="h8">\n' +
-    '<div id="black-rack2" class="draggable black">♜</div>\n' +
+    '<div id="black-rack2" class="draggable black">&#9820;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="g8">\n' +
-    '<div id="black-knight2" class="draggable black">♞</div>\n' +
+    '<div id="black-knight2" class="draggable black">&#9822;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="f8">\n' +
-    '<div id="black-bishop2" class="draggable black">♝</div>\n' +
+    '<div id="black-bishop2" class="draggable black">&#9821;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="e8">\n' +
-    '<div id="black-king" class="draggable black">♚</div>\n' +
+    '<div id="black-king" class="draggable black">&#9818;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="d8">\n' +
-    '<div id="black-queen" class="draggable black">♛</div>\n' +
+    '<div id="black-queen" class="draggable black">&#9819;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="c8">\n' +
-    '<div id="black-bishop1" class="draggable black">♝</div>\n' +
+    '<div id="black-bishop1" class="draggable black">&#9821;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="b8">\n' +
-    '<div id="black-knight1" class="draggable black">♞</div>\n' +
+    '<div id="black-knight1" class="draggable black">&#9822;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="a8">\n' +
-    '<div id="black-rock1" class="draggable black">♜</div>\n' +
+    '<div id="black-rock1" class="draggable black">&#9820;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '</div>\n' +
@@ -348,7 +348,7 @@ function connect() {
     var move; // chess move log (e2-e4)
 
     function addDnD() {
-        $(".draggable." + myFigureColor).draggable({
+        $(".draggable").draggable({
             start: function (event, ui) {
                 move = $(this).parents(".divTableCell").attr("id");
             }
@@ -384,7 +384,7 @@ function connect() {
                 toCemetery("white", this);
 
                 var from = move;
-                move = move + " - X";
+                move = move + " &rarr; X";
                 var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
                 $("#" + myFigureColor + "-moves").append(moveDiv);
 
@@ -395,15 +395,17 @@ function connect() {
 
         $(".divTableCell").droppable({
             drop: function (event, ui) {
-                pauseTimer();
-                $(event.toElement).css({top: 0, left: 0});
-                $(this).append($(event.toElement));
-                var from = move;
-                move = move + " - " + $(this).attr("id");
-                var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
-                $("#" + myFigureColor + "-moves").append(moveDiv);
-                websocket.send(JSON.stringify(new Move(from, $(this).attr("id"), "Move")));
-                websocket.send(JSON.stringify(new MoveNotification(moveDiv, myFigureColor, "MoveNotification")));
+                if (move.indexOf($(this).attr("id")) === -1) {
+                    pauseTimer();
+                    $(event.toElement).css({top: 0, left: 0});
+                    $(this).append($(event.toElement));
+                    var from = move;
+                    move = move + " &rarr; " + $(this).attr("id");
+                    var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
+                    $("#" + myFigureColor + "-moves").append(moveDiv);
+                    websocket.send(JSON.stringify(new MoveNotification(moveDiv, myFigureColor, "MoveNotification")));
+                    websocket.send(JSON.stringify(new Move(from, $(this).attr("id"), "Move")));
+                }
             }
         });
     }

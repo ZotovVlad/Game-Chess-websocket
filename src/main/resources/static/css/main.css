@@ -3,13 +3,6 @@ body {
     margin: 0;
 }
 
-/*td {*/
-/*width: 75px;*/
-/*height: 75px;*/
-/*font-size: 50px;*/
-/*text-align: center;*/
-/*}*/
-
 .divTableRow:nth-child(odd) .divTableCell:nth-child(even), .divTableRow:nth-child(even) .divTableCell:nth-child(odd) {
     background: #999;
 }

@@ -407,8 +407,10 @@ function connect() {
     function onMessage(evt) {
         var message = evt.data;
         if (message.indexOf("{") !== -1 && message.indexOf("MoveNotification") !== -1) {
-            resumeTimer();
             var json = JSON.parse(message);
+            if (json.to.length === 2) { // regular cell. not cemetery
+                resumeTimer();
+            }
             $("#" + json.figureColor + "-moves").append(json.div);
             $("#" + json.to).append($("#" + json.from).find("div"));
         } else if (message.indexOf("{") !== -1 && message.indexOf("Message") !== -1) {

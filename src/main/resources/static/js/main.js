@@ -12,16 +12,12 @@ function str_pad_left(string, pad, length) {
     return (new Array(length + 1).join(pad) + string).slice(-length);
 }
 
-function Move(from, to, typeName) {
-    this.typeName = typeName;
-    this.from = from;
-    this.to = to;
-}
-
-function MoveNotification(div, figureColor, typeName) {
+function MoveNotification(div, figureColor, from, to, typeName) {
     this.typeName = typeName;
     this.div = div;
     this.figureColor = figureColor;
+    this.from = from;
+    this.to = to;
 }
 
 function Message(issuer, msg, typeName) {
@@ -388,8 +384,7 @@ function connect() {
                 var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
                 $("#" + myFigureColor + "-moves").append(moveDiv);
 
-                websocket.send(JSON.stringify(new Move(from, to, "Move")));
-                websocket.send(JSON.stringify(new MoveNotification(moveDiv, myFigureColor, "MoveNotification")));
+                websocket.send(JSON.stringify(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification")));
             }
         });
 
@@ -403,8 +398,7 @@ function connect() {
                     move = move + " &rarr; " + $(this).attr("id");
                     var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
                     $("#" + myFigureColor + "-moves").append(moveDiv);
-                    websocket.send(JSON.stringify(new MoveNotification(moveDiv, myFigureColor, "MoveNotification")));
-                    websocket.send(JSON.stringify(new Move(from, $(this).attr("id"), "Move")));
+                    websocket.send(JSON.stringify(new MoveNotification(moveDiv, myFigureColor, from, $(this).attr("id"), "MoveNotification")));
                 }
             }
         });
@@ -416,8 +410,6 @@ function connect() {
             resumeTimer();
             var json = JSON.parse(message);
             $("#" + json.figureColor + "-moves").append(json.div);
-        } else if (message.indexOf("{") !== -1 && message.indexOf("Move") !== -1) { // message to move figure
-            var json = JSON.parse(message);
             $("#" + json.to).append($("#" + json.from).find("div"));
         } else if (message.indexOf("{") !== -1 && message.indexOf("Message") !== -1) {
             var json = JSON.parse(message);

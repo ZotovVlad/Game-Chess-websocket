@@ -523,4 +523,5 @@ $(window).on('load', function () {
     $("#gameTable").css({"height": $(".divTable").width()});
     $("#main-chess").css({"height": $(".divTable").width()});
     $("#chat").css({"height": $(".divTable").width()});
+    $("#content").css("visibility", "visible")
 });

@@ -24,6 +24,7 @@ div[class^="mv-"] {
     width: 50%;
     float: left;
     text-align: center;
+    font-family: monospace;
 }
 
 .moves span {

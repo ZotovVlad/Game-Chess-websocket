@@ -432,12 +432,11 @@ function connect() {
                 $("#blackTime").html("<span class='time'>" + json.time + "</span>");
             }
         } else if (message.indexOf("Ok!") === -1 && message.indexOf("session:") !== -1) {
-            console.log(window.location.host + "/#" + message.substring('session:'.length, message.length));
             if (window.location.href.indexOf("#") === -1) {
                 $("#waiting span").html("<h1>Waiting for opponent <br>Chess board number: "
                     + message.substring('session:'.length, message.length)
                     + "</h1><br><br><h2>"
-                    + window.location.host + "/#" + message.substring('session:'.length, message.length)
+                    + window.location.origin + "/#" + message.substring('session:'.length, message.length)
                     + "</h2>");
             }
             $("#gameTable").append(gameTable);

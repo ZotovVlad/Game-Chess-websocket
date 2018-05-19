@@ -518,3 +518,10 @@ $(function () {
         }, 1500);
     })
 });
+
+window.addEventListener("resize", function () {
+    $(".divTable").css({"height": $(".divTable").width()});
+    $("#gameTable").css({"height": $(".divTable").width()});
+    $("#main-chess").css({"height": $(".divTable").width()});
+    $("#chat").css({"height": $(".divTable").width()});
+}, false);

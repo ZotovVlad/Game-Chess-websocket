@@ -468,13 +468,6 @@ function connect() {
     return websocket;
 }
 
-$(window).load(function () {
-    $(".divTable").css({"height": $(".divTable").width()});
-    $("#gameTable").css({"height": $(".divTable").width()});
-    $("#main-chess").css({"height": $(".divTable").width()});
-    $("#chat").css({"height": $(".divTable").width()});
-});
-
 $(function () {
     if (window.location.href.indexOf("#") === -1) {
         var filterVal = 'blur(7px)';
@@ -516,7 +509,12 @@ $(function () {
         setInterval(function () {
             isTyping = false;
         }, 1500);
-    })
+    });
+
+    $(".divTable").css({"height": $(".divTable").width()});
+    $("#gameTable").css({"height": $(".divTable").width()});
+    $("#main-chess").css({"height": $(".divTable").width()});
+    $("#chat").css({"height": $(".divTable").width()});
 });
 
 window.addEventListener("resize", function () {

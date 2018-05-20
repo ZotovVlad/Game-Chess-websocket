@@ -20,10 +20,12 @@ div[class^="cemetery-"] {
     font-size: 3.5vw;
 }
 
-div[class^="mv-"] {
-    width: 50%;
+div[class^="cemetery-"] div {
     float: left;
-    text-align: center;
+}
+
+div[class^="mv-"] {
+    width: 100%;
     font-family: monospace;
 }
 

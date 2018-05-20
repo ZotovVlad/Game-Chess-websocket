@@ -41,39 +41,39 @@ function Typing(typing, typeName) {
 var gameTable = '<div class="cemetery"><div class="cemetery-white" id="cw1"></div><div class="cemetery-black" id="cb1"></div></div><div class="divTable">\n' +
     '<div class="divTableBody">\n' +
     '<div class="divTableRow">\n' +
-    '<div class="divTableCell" id="a8"><div id="black-rock1" class="draggable black">&#9820;</div>\n' +
+    '<div class="divTableCell" id="a8"><div id="black-rock1" class="draggable" color="black">&#9820;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="b8"><div id="black-knight1" class="draggable black">&#9822;</div>\n' +
+    '<div class="divTableCell" id="b8"><div id="black-knight1" class="draggable" color="black">&#9822;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="c8"><div id="black-bishop1" class="draggable black">&#9821;</div>\n' +
+    '<div class="divTableCell" id="c8"><div id="black-bishop1" class="draggable" color="black">&#9821;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="d8"><div id="black-queen" class="draggable black">&#9819;</div>\n' +
+    '<div class="divTableCell" id="d8"><div id="black-queen" class="draggable" color="black">&#9819;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="e8"><div id="black-king" class="draggable black">&#9818;</div>\n' +
+    '<div class="divTableCell" id="e8"><div id="black-king" class="draggable" color="black">&#9818;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="f8"><div id="black-bishop2" class="draggable black">&#9821;</div>\n' +
+    '<div class="divTableCell" id="f8"><div id="black-bishop2" class="draggable" color="black">&#9821;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="g8"><div id="black-knight2" class="draggable black">&#9822;</div>\n' +
+    '<div class="divTableCell" id="g8"><div id="black-knight2" class="draggable" color="black">&#9822;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="h8"><div id="black-rack2" class="draggable black">&#9820;</div>\n' +
+    '<div class="divTableCell" id="h8"><div id="black-rack2" class="draggable" color="black">&#9820;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '<div class="divTableRow">\n' +
-    '<div class="divTableCell" id="a7"><div id="black-pawn1" class="draggable black">&#9823;</div>\n' +
+    '<div class="divTableCell" id="a7"><div id="black-pawn1" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="b7"><div id="black-pawn2" class="draggable black">&#9823;</div>\n' +
+    '<div class="divTableCell" id="b7"><div id="black-pawn2" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="c7"><div id="black-pawn3" class="draggable black">&#9823;</div>\n' +
+    '<div class="divTableCell" id="c7"><div id="black-pawn3" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="d7"><div id="black-pawn4" class="draggable black">&#9823;</div>\n' +
+    '<div class="divTableCell" id="d7"><div id="black-pawn4" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="e7"><div id="black-pawn5" class="draggable black">&#9823;</div>\n' +
+    '<div class="divTableCell" id="e7"><div id="black-pawn5" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="f7"><div id="black-pawn6" class="draggable black">&#9823;</div>\n' +
+    '<div class="divTableCell" id="f7"><div id="black-pawn6" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="g7"><div id="black-pawn7" class="draggable black">&#9823;</div>\n' +
+    '<div class="divTableCell" id="g7"><div id="black-pawn7" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="h7"><div id="black-pawn8" class="draggable black">&#9823;</div>\n' +
+    '<div class="divTableCell" id="h7"><div id="black-pawn8" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '<div class="divTableRow">\n' +
@@ -117,39 +117,39 @@ var gameTable = '<div class="cemetery"><div class="cemetery-white" id="cw1"></di
     '<div class="divTableCell" id="h3">&nbsp;</div>\n' +
     '</div>\n' +
     '<div class="divTableRow">\n' +
-    '<div class="divTableCell" id="a2"><div id="white-pawn1" class="draggable white">&#9817;</div>\n' +
+    '<div class="divTableCell" id="a2"><div id="white-pawn1" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="b2"><div id="white-pawn2" class="draggable white">&#9817;</div>\n' +
+    '<div class="divTableCell" id="b2"><div id="white-pawn2" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="c2"><div id="white-pawn3" class="draggable white">&#9817;</div>\n' +
+    '<div class="divTableCell" id="c2"><div id="white-pawn3" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="d2"><div id="white-pawn4" class="draggable white">&#9817;</div>\n' +
+    '<div class="divTableCell" id="d2"><div id="white-pawn4" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="e2"><div id="white-pawn5" class="draggable white">&#9817;</div>\n' +
+    '<div class="divTableCell" id="e2"><div id="white-pawn5" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="f2"><div id="white-pawn6" class="draggable white">&#9817;</div>\n' +
+    '<div class="divTableCell" id="f2"><div id="white-pawn6" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="g2"><div id="white-pawn7" class="draggable white">&#9817;</div>\n' +
+    '<div class="divTableCell" id="g2"><div id="white-pawn7" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="h2"><div id="white-pawn8" class="draggable white">&#9817;</div>\n' +
+    '<div class="divTableCell" id="h2"><div id="white-pawn8" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '<div class="divTableRow">\n' +
-    '<div class="divTableCell" id="a1"><div id="white-rock1" class="draggable white">&#9814;</div>\n' +
+    '<div class="divTableCell" id="a1"><div id="white-rock1" class="draggable" color="white">&#9814;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="b1"><div id="white-knight1" class="draggable white">&#9816;</div>\n' +
+    '<div class="divTableCell" id="b1"><div id="white-knight1" class="draggable" color="white">&#9816;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="c1"><div id="white-bishop1" class="draggable white">&#9815;</div>\n' +
+    '<div class="divTableCell" id="c1"><div id="white-bishop1" class="draggable" color="white">&#9815;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="d1"><div id="white-queen" class="draggable white">&#9813;</div>\n' +
+    '<div class="divTableCell" id="d1"><div id="white-queen" class="draggable" color="white">&#9813;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="e1"><div id="white-king" class="draggable white">&#9812;</div>\n' +
+    '<div class="divTableCell" id="e1"><div id="white-king" class="draggable" color="white">&#9812;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="f1"><div id="white-bishop2" class="draggable white">&#9815;</div>\n' +
+    '<div class="divTableCell" id="f1"><div id="white-bishop2" class="draggable" color="white">&#9815;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="g1"><div id="white-knight2" class="draggable white">&#9816;</div>\n' +
+    '<div class="divTableCell" id="g1"><div id="white-knight2" class="draggable" color="white">&#9816;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="h1"><div id="white-rack2" class="draggable white">&#9814;</div>\n' +
+    '<div class="divTableCell" id="h1"><div id="white-rack2" class="draggable" color="white">&#9814;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '</div>\n' +
@@ -159,54 +159,54 @@ var gameTableVerse = '<div class="cemetery"><div class="cemetery-black" id="cb1"
     '<div class="divTableBody">\n' +
     '<div class="divTableRow">\n' +
     '<div class="divTableCell" id="h1">\n' +
-    '<div id="white-rack2" class="draggable white">&#9814;</div>\n' +
+    '<div id="white-rack2" class="draggable" color="white">&#9814;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="g1">\n' +
-    '<div id="white-knight2" class="draggable white">&#9816;</div>\n' +
+    '<div id="white-knight2" class="draggable" color="white">&#9816;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="f1">\n' +
-    '<div id="white-bishop2" class="draggable white">&#9815;</div>\n' +
+    '<div id="white-bishop2" class="draggable" color="white">&#9815;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="e1">\n' +
-    '<div id="white-king" class="draggable white">&#9812;</div>\n' +
+    '<div id="white-king" class="draggable" color="white">&#9812;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="d1">\n' +
-    '<div id="white-queen" class="draggable white">&#9813;</div>\n' +
+    '<div id="white-queen" class="draggable" color="white">&#9813;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="c1">\n' +
-    '<div id="white-bishop1" class="draggable white">&#9815;</div>\n' +
+    '<div id="white-bishop1" class="draggable" color="white">&#9815;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="b1">\n' +
-    '<div id="white-knight1" class="draggable white">&#9816;</div>\n' +
+    '<div id="white-knight1" class="draggable" color="white">&#9816;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="a1">\n' +
-    '<div id="white-rock1" class="draggable white">&#9814;</div>\n' +
+    '<div id="white-rock1" class="draggable" color="white">&#9814;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '<div class="divTableRow">\n' +
     '<div class="divTableCell" id="h2">\n' +
-    '<div id="white-pawn8" class="draggable white">&#9817;</div>\n' +
+    '<div id="white-pawn8" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="g2">\n' +
-    '<div id="white-pawn7" class="draggable white">&#9817;</div>\n' +
+    '<div id="white-pawn7" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="f2">\n' +
-    '<div id="white-pawn6" class="draggable white">&#9817;</div>\n' +
+    '<div id="white-pawn6" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="e2">\n' +
-    '<div id="white-pawn5" class="draggable white">&#9817;</div>\n' +
+    '<div id="white-pawn5" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="d2">\n' +
-    '<div id="white-pawn4" class="draggable white">&#9817;</div>\n' +
+    '<div id="white-pawn4" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="c2">\n' +
-    '<div id="white-pawn3" class="draggable white">&#9817;</div>\n' +
+    '<div id="white-pawn3" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="b2">\n' +
-    '<div id="white-pawn2" class="draggable white">&#9817;</div>\n' +
+    '<div id="white-pawn2" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="a2">\n' +
-    '<div id="white-pawn1" class="draggable white">&#9817;</div>\n' +
+    '<div id="white-pawn1" class="draggable" color="white">&#9817;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '<div class="divTableRow">\n' +
@@ -251,54 +251,54 @@ var gameTableVerse = '<div class="cemetery"><div class="cemetery-black" id="cb1"
     '</div>\n' +
     '<div class="divTableRow">\n' +
     '<div class="divTableCell" id="h7">\n' +
-    '<div id="black-pawn8" class="draggable black">&#9823;</div>\n' +
+    '<div id="black-pawn8" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="g7">\n' +
-    '<div id="black-pawn7" class="draggable black">&#9823;</div>\n' +
+    '<div id="black-pawn7" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="f7">\n' +
-    '<div id="black-pawn6" class="draggable black">&#9823;</div>\n' +
+    '<div id="black-pawn6" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="e7">\n' +
-    '<div id="black-pawn5" class="draggable black">&#9823;</div>\n' +
+    '<div id="black-pawn5" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="d7">\n' +
-    '<div id="black-pawn4" class="draggable black">&#9823;</div>\n' +
+    '<div id="black-pawn4" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="c7">\n' +
-    '<div id="black-pawn3" class="draggable black">&#9823;</div>\n' +
+    '<div id="black-pawn3" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="b7">\n' +
-    '<div id="black-pawn2" class="draggable black">&#9823;</div>\n' +
+    '<div id="black-pawn2" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="a7">\n' +
-    '<div id="black-pawn1" class="draggable black">&#9823;</div>\n' +
+    '<div id="black-pawn1" class="draggable" color="black">&#9823;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '<div class="divTableRow">\n' +
     '<div class="divTableCell" id="h8">\n' +
-    '<div id="black-rack2" class="draggable black">&#9820;</div>\n' +
+    '<div id="black-rack2" class="draggable" color="black">&#9820;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="g8">\n' +
-    '<div id="black-knight2" class="draggable black">&#9822;</div>\n' +
+    '<div id="black-knight2" class="draggable" color="black">&#9822;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="f8">\n' +
-    '<div id="black-bishop2" class="draggable black">&#9821;</div>\n' +
+    '<div id="black-bishop2" class="draggable" color="black">&#9821;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="e8">\n' +
-    '<div id="black-king" class="draggable black">&#9818;</div>\n' +
+    '<div id="black-king" class="draggable" color="black">&#9818;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="d8">\n' +
-    '<div id="black-queen" class="draggable black">&#9819;</div>\n' +
+    '<div id="black-queen" class="draggable" color="black">&#9819;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="c8">\n' +
-    '<div id="black-bishop1" class="draggable black">&#9821;</div>\n' +
+    '<div id="black-bishop1" class="draggable" color="black">&#9821;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="b8">\n' +
-    '<div id="black-knight1" class="draggable black">&#9822;</div>\n' +
+    '<div id="black-knight1" class="draggable" color="black">&#9822;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="a8">\n' +
-    '<div id="black-rock1" class="draggable black">&#9820;</div>\n' +
+    '<div id="black-rock1" class="draggable" color="black">&#9820;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '</div>\n' +
@@ -336,6 +336,13 @@ function resumeTimer() {
     }
 }
 
+function layoutFixHeight() {
+    $(".divTable").css({"height": $(".divTable").width() + "px"});
+    $("#gameTable").css({"height": $(".divTable").width() + "px"});
+    $("#main-chess").css({"height": $(".divTable").width() + "px"});
+    $("#chat").css({"height": $(".divTable").width() + "px"});
+}
+
 function connect() {
     var webSocketUrl = 'ws://' + window.location.host + '/websocket';
     if (window.location.hash.length !== 0) {
@@ -351,54 +358,72 @@ function connect() {
             }
         });
 
-        $("div[class^='cemetery-']").droppable({
-            drop: function (event, ui) {
-                var to;
-                $(event.toElement).css({top: 0, left: 0, position: '', float: 'left'});
+        function killingFigure(elem, from) {
+            debugger;
+            if (from === undefined) {
+                from = $(this).attr("id");
+                move = move + " &rarr; X &rarr; " + from;
+            } else {
+                move = move + " &rarr; X";
+            }
+            var to;
 
-                function toCemetery(color, e) {
-                    if ($(event.toElement).attr("id").indexOf(color) !== -1 && $(e).attr("class").indexOf(color) === -1) {
-                        if ($($(".cemetery-" + color)[0]).find(".draggable").size() / 2 * $(".draggable").height() > $($(".cemetery-" + color)[0]).height()) {
-                            $($(".cemetery-" + color)[1]).append($(event.toElement));
-                            to = $($(".cemetery-" + color)[1]).attr("id");
-                        } else {
-                            $($(".cemetery-" + color)[0]).append($(event.toElement));
-                            to = $($(".cemetery-" + color)[0]).attr("id");
-                        }
-                    } else if ($(event.toElement).attr("id").indexOf(color) !== -1 && $(e).attr("class").indexOf(color) !== -1) {
-                        if ($($(".cemetery-" + color)[0]).find(".draggable").size() / 2 * $(".draggable").height() > $($(".cemetery-" + color)[0]).height()) {
-                            $($(".cemetery-" + color)[1]).append($(event.toElement));
-                            to = $($(".cemetery-" + color)[1]).attr("id");
-                        } else {
-                            $(e).append($(event.toElement));
-                            to = $(e).attr("id");
-                        }
+            function toCemetery(color, e) {
+                if ($(elem).attr("color").indexOf(color) !== -1 && $(e).attr("class").indexOf(color) === -1) {
+                    if ($($(".cemetery-" + color)[0]).find(".draggable").size() / 2 * $(".draggable").height() > $($(".cemetery-" + color)[0]).height()) {
+                        $($(".cemetery-" + color)[1]).append($(elem));
+                        to = $($(".cemetery-" + color)[1]).attr("id");
+                    } else {
+                        $($(".cemetery-" + color)[0]).append($(elem));
+                        to = $($(".cemetery-" + color)[0]).attr("id");
+                    }
+                } else if ($(elem).attr("color").indexOf(color) !== -1 && $(e).attr("class").indexOf(color) !== -1) {
+                    if ($($(".cemetery-" + color)[0]).find(".draggable").size() / 2 * $(".draggable").height() > $($(".cemetery-" + color)[0]).height()) {
+                        $($(".cemetery-" + color)[1]).append($(elem));
+                        to = $($(".cemetery-" + color)[1]).attr("id");
+                    } else {
+                        $(e).append($(elem));
+                        to = $(e).attr("id");
                     }
                 }
+            }
 
-                toCemetery("black", this);
+            toCemetery("black", elem);
 
-                toCemetery("white", this);
+            toCemetery("white", elem);
 
-                var from = move;
-                move = move + " &rarr; X";
-                var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
-                $("#" + myFigureColor + "-moves").append(moveDiv);
-                movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification"));
+            var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
+            $("#" + myFigureColor + "-moves").append(moveDiv);
+            movesArray.push(new MoveNotification(moveDiv, $(elem).attr("color"), from, to, "MoveNotification"));
+            move = "";
+        }
+
+        $("div[class^='cemetery-']").droppable({
+            drop: function (event, ui) {
+                debugger;
+                killingFigure.call(this, event.toElement, move);
             }
         });
 
         $(".divTableCell").droppable({
             drop: function (event, ui) {
                 if (move.indexOf($(this).attr("id")) === -1) {
+                    debugger;
+                    var from = move;
+                    var to = $(this).attr("id");
+                    if ($(this).children("div").length) {
+                        movesArray.push(new MoveNotification("", myFigureColor, from, to, "MoveNotification"));
+                        killingFigure.call(this, $(this).children("div"));
+                    } else {
+                        move = move + " &rarr; " + $(this).attr("id");
+                        var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
+                        $("#" + myFigureColor + "-moves").append(moveDiv);
+                        movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification"));
+                        move = "";
+                    }
+                    debugger;
                     $(event.toElement).css({top: 0, left: 0});
                     $(this).append($(event.toElement));
-                    var from = move;
-                    move = move + " &rarr; " + $(this).attr("id");
-                    var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
-                    $("#" + myFigureColor + "-moves").append(moveDiv);
-                    var to = $(this).attr("id");
-                    movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification"));
                 }
             }
         });
@@ -412,8 +437,10 @@ function connect() {
             if (json.to.length === 2) { // regular cell. not cemetery
                 resumeTimer();
             }
-            $("#" + json.figureColor + "-moves").append(json.div);
-            $("#" + json.to).append($("#" + json.from).find("div"));
+            if (json.div.length) {
+                $("#" + json.div.substring(json.div.indexOf("mv-") + 3, json.div.indexOf("'>")) + "-moves").append(json.div);
+            }
+            $("#" + json.to).append($("#" + json.from).find("div[color=" + json.figureColor + "]"));
         } else if (message.indexOf("{") !== -1 && message.indexOf("Message") !== -1) {
             var json = JSON.parse(message);
             $("#chatMessages").val($("#chatMessages").val() + "\n" + (json.issuer + ": " + json.msg));
@@ -442,10 +469,13 @@ function connect() {
             }
             $("#gameTable").append(gameTable);
             myFigureColor = "white";
+            layoutFixHeight();
         } else if (message.indexOf("Connected to opponent") !== -1) {
+            $('#button > input[type="button"]').prop('disabled', true);
             $("#gameTable").append(gameTableVerse);
             myFigureColor = "black";
             addDnD();
+            layoutFixHeight();
         } else if (message.indexOf("Opponent with id") !== -1) {
             addDnD();
             var filterVal = 'blur(0px)';
@@ -516,26 +546,14 @@ $(function () {
     $('#button > input[type="button"]').click(function () {
         pauseTimer();
         movesArray.forEach(function (s) {
+            debugger;
             websocket.send(JSON.stringify(s));
         });
+        movesArray = [];
         $('#button > input[type="button"]').prop('disabled', true);
     });
 });
 
 window.addEventListener("resize", function () {
-    $(".divTable").css({"height": $(".divTable").width() + "px"});
-    $("#gameTable").css({"height": $(".divTable").width() + "px"});
-    $("#main-chess").css({"height": $(".divTable").width() + "px"});
-    $("#chat").css({"height": $(".divTable").width() + "px"});
+    layoutFixHeight();
 }, false);
-
-$(window).on('load', function () {
-    var layoutInterval;
-    layoutInterval = setInterval(function () {
-        $(".divTable").css({"height": $(".divTable").width() + "px"});
-        $("#gameTable").css({"height": $(".divTable").width() + "px"});
-        $("#main-chess").css({"height": $(".divTable").width() + "px"});
-        $("#chat").css({"height": $(".divTable").width() + "px"});
-        clearInterval(layoutInterval);
-    }, 1000);
-});

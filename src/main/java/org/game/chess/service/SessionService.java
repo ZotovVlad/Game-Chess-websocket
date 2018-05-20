@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -21,8 +22,8 @@ public class SessionService {
         return sessionController.saveSession(session);
     }
 
-    public WebSocketSession getOpponentForSessionBySessionId(String sessionId) {
-        return sessionController.getOpponentBySessionId(sessionId);
+    public WebSocketSession getOpponentForSession(WebSocketSession session) {
+        return sessionController.getOpponentSession(session);
     }
 
     public void removeSession(WebSocketSession session) {

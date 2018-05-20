@@ -40,7 +40,7 @@ public class ChessMessageHandler extends TextWebSocketHandler {
         if (singleSession != null) {
             session.sendMessage(new TextMessage("session:" + session.getId()));
         } else {
-            WebSocketSession opponent = sessionService.getOpponentForSessionBySessionId(session.getId());
+            WebSocketSession opponent = sessionService.getOpponentForSession(session);
             if (opponent != null) {
                 opponent.sendMessage(new TextMessage("Ok! Opponent with id " + session.getId() + " connected"));
                 session.sendMessage(new TextMessage("Ok! Connected to opponent with id " + opponent.getId()));
@@ -54,7 +54,7 @@ public class ChessMessageHandler extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage textMessage) throws IOException {
         // A message has been received
 //        log.info("Message received: " + textMessage.getPayload());
-        WebSocketSession opponentSession = sessionService.getOpponentForSessionBySessionId(session.getId());
+        WebSocketSession opponentSession = sessionService.getOpponentForSession(session);
         if (opponentSession != null) {
             opponentSession.sendMessage(textMessage);
         }

@@ -474,7 +474,7 @@ function connect() {
             layoutFixHeight();
         } else if (message.indexOf("Opponent with id") !== -1) {
             addDnD();
-            var filterVal = 'blur(0px)';
+            var filterVal = 'blur(7px)';
             $("#waiting").fadeOut();
             $("#content").css({filter: filterVal});
             whiteInterval = setInterval(function () {
@@ -484,6 +484,12 @@ function connect() {
                 websocket.send(JSON.stringify(new Time("white", str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2), "Time")));
                 $("#whiteTime").html("<span class='time'>" + str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2) + "</span>");
             }, 1000);
+        } else if (message.indexOf("Connection is closed") !== -1) {
+            pauseTimer();
+            var filterVal = 'blur(0px)';
+            $("#content").css({filter: filterVal});
+            $("#waiting").html("<h2 style='color: #ef5350;'>Opponent has left the game</h2>");
+            $("#waiting").fadeIn();
         }
     }
 

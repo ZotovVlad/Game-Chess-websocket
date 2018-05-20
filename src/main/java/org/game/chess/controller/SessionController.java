@@ -1,11 +1,12 @@
 package org.game.chess.controller;
 
 import lombok.extern.log4j.Log4j;
-import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.*;
@@ -36,9 +37,8 @@ public class SessionController {
         return session.getId();
     }
 
-    public WebSocketSession getOpponentBySessionId(String sessionId) {
-        WebSocketSession opponentSession = getSessionById(sessionId);
-        return sessions.get(opponentSession);
+    public WebSocketSession getOpponentSession(WebSocketSession session) {
+        return sessions.get(session);
     }
 
     public WebSocketSession getSessionById(String sessionId) {
@@ -47,6 +47,19 @@ public class SessionController {
 
     public void removeSession(WebSocketSession session) {
         log.info("Sessions online before cleanup: " + getSessionsOnline());
+        try {
+            session.sendMessage(new TextMessage("Connection is closed"));
+            log.info("Message about opponent left the game to session " + session.getId() + " successfully sent");
+        } catch (IOException | IllegalStateException | NullPointerException e) {
+            log.warn("session is already closed");
+        }
+        try {
+            WebSocketSession opponentSession = getOpponentSession(session);
+            opponentSession.sendMessage(new TextMessage("Connection is closed"));
+            log.info("Message about opponent left the game to session " + opponentSession.getId() + " successfully sent");
+        } catch (IOException | IllegalStateException | NullPointerException e) {
+            log.warn("session is already closed");
+        }
         sessions.values().removeAll(Collections.singleton(session));
         sessions.remove(session);
         log.info("Sessions online after: " + getSessionsOnline());

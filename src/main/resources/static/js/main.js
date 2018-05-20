@@ -359,7 +359,6 @@ function connect() {
         });
 
         function killingFigure(elem, from) {
-            debugger;
             if (from === undefined) {
                 from = $(this).attr("id");
                 move = move + " &rarr; X &rarr; " + from;
@@ -400,7 +399,6 @@ function connect() {
 
         $("div[class^='cemetery-']").droppable({
             drop: function (event, ui) {
-                debugger;
                 killingFigure.call(this, event.toElement, move);
             }
         });
@@ -408,7 +406,6 @@ function connect() {
         $(".divTableCell").droppable({
             drop: function (event, ui) {
                 if (move.indexOf($(this).attr("id")) === -1) {
-                    debugger;
                     var from = move;
                     var to = $(this).attr("id");
                     if ($(this).children("div").length) {
@@ -421,7 +418,6 @@ function connect() {
                         movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification"));
                         move = "";
                     }
-                    debugger;
                     $(event.toElement).css({top: 0, left: 0});
                     $(this).append($(event.toElement));
                 }
@@ -546,7 +542,6 @@ $(function () {
     $('#button > input[type="button"]').click(function () {
         pauseTimer();
         movesArray.forEach(function (s) {
-            debugger;
             websocket.send(JSON.stringify(s));
         });
         movesArray = [];

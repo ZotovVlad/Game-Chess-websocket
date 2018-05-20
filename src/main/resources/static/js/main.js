@@ -7,6 +7,7 @@ var blackTime = 0;
 var minutes;
 var seconds;
 var websocket;
+var movesArray = [];
 
 function str_pad_left(string, pad, length) {
     return (new Array(length + 1).join(pad) + string).slice(-length);
@@ -383,22 +384,21 @@ function connect() {
                 move = move + " &rarr; X";
                 var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
                 $("#" + myFigureColor + "-moves").append(moveDiv);
-
-                websocket.send(JSON.stringify(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification")));
+                movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification"));
             }
         });
 
         $(".divTableCell").droppable({
             drop: function (event, ui) {
                 if (move.indexOf($(this).attr("id")) === -1) {
-                    pauseTimer();
                     $(event.toElement).css({top: 0, left: 0});
                     $(this).append($(event.toElement));
                     var from = move;
                     move = move + " &rarr; " + $(this).attr("id");
                     var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
                     $("#" + myFigureColor + "-moves").append(moveDiv);
-                    websocket.send(JSON.stringify(new MoveNotification(moveDiv, myFigureColor, from, $(this).attr("id"), "MoveNotification")));
+                    var to = $(this).attr("id");
+                    movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification"));
                 }
             }
         });
@@ -408,6 +408,7 @@ function connect() {
         var message = evt.data;
         if (message.indexOf("{") !== -1 && message.indexOf("MoveNotification") !== -1) {
             var json = JSON.parse(message);
+            $('#button > input[type="button"]').prop('disabled', false);
             if (json.to.length === 2) { // regular cell. not cemetery
                 resumeTimer();
             }
@@ -511,6 +512,14 @@ $(function () {
             isTyping = false;
         }, 1500);
     });
+
+    $('#button > input[type="button"]').click(function () {
+        pauseTimer();
+        movesArray.forEach(function (s) {
+            websocket.send(JSON.stringify(s));
+        });
+        $('#button > input[type="button"]').prop('disabled', true);
+    });
 });
 
 window.addEventListener("resize", function () {
@@ -521,7 +530,6 @@ window.addEventListener("resize", function () {
 }, false);
 
 $(window).on('load', function () {
-
     var layoutInterval;
     layoutInterval = setInterval(function () {
         $(".divTable").css({"height": $(".divTable").width() + "px"});
@@ -530,5 +538,4 @@ $(window).on('load', function () {
         $("#chat").css({"height": $(".divTable").width() + "px"});
         clearInterval(layoutInterval);
     }, 1000);
-
 });

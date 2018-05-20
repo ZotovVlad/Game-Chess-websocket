@@ -108,6 +108,8 @@ div[class^="mv-"] {
     position: absolute;
     width: 100vw;
     height: 100vh;
+    max-height: 100vh;
+    min-height: 100vh;
     right: 0;
     left: 0;
 }
@@ -115,6 +117,20 @@ div[class^="mv-"] {
 #timePlate {
     width: 100%;
     font-size: 4.5vw;
+    display: block;
+    float: left;
+}
+
+#button {
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+
+#button input {
+    width: 50%;
+    font-size: 4.5vw;
+    background-color: #ef5350;
 }
 
 #timePlate div {

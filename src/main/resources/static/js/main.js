@@ -440,7 +440,7 @@ function connect() {
         } else if (message.indexOf("{") !== -1 && message.indexOf("Message") !== -1) {
             var json = JSON.parse(message);
             $("#chatMessages").val($("#chatMessages").val() + "\n" + (json.issuer + ": " + json.msg));
-            document.getElementById("chatMessages").scrollTop = document.getElementById("chatMessages").scrollHeight
+            document.getElementById("chatMessages").scrollTop = document.getElementById("chatMessages").scrollHeight;
         } else if (message.indexOf("{") !== -1 && message.indexOf("Typing") !== -1) {
             var json = JSON.parse(message);
             if (json.typing) {
@@ -474,7 +474,7 @@ function connect() {
             layoutFixHeight();
         } else if (message.indexOf("Opponent with id") !== -1) {
             addDnD();
-            var filterVal = 'blur(7px)';
+            var filterVal = 'blur(0px)';
             $("#waiting").fadeOut();
             $("#content").css({filter: filterVal});
             whiteInterval = setInterval(function () {
@@ -486,7 +486,7 @@ function connect() {
             }, 1000);
         } else if (message.indexOf("Connection is closed") !== -1) {
             pauseTimer();
-            var filterVal = 'blur(0px)';
+            var filterVal = 'blur(7px)';
             $("#content").css({filter: filterVal});
             $("#waiting").html("<h2 style='color: #ef5350;'>Opponent has left the game</h2>");
             $("#waiting").fadeIn();

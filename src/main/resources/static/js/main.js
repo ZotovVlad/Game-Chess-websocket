@@ -316,7 +316,6 @@ function pauseTimer() {
 
 function resumeTimer() {
     if (myFigureColor === "black") {
-
         blackInterval = setInterval(function () {
             blackTime += 1;
             minutes = Math.floor(blackTime / 60);
@@ -325,7 +324,6 @@ function resumeTimer() {
             $("#blackTime").html("<span class='time'>" + str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2) + "</span>");
         }, 1000);
     } else {
-
         whiteInterval = setInterval(function () {
             whiteTime += 1;
             minutes = Math.floor(whiteTime / 60);
@@ -344,7 +342,13 @@ function layoutFixHeight() {
 }
 
 function connect() {
-    var webSocketUrl = 'ws://' + window.location.host + '/websocket';
+    var rootPath = window.location.pathname.split('/')[1];
+    if (rootPath === undefined) {
+        rootPath = "";
+    } else {
+        rootPath += "/";
+    }
+    var webSocketUrl = 'ws://' + window.location.hostname + rootPath + 'websocket';
     if (window.location.hash.length !== 0) {
         webSocketUrl = webSocketUrl + "?opp=" + window.location.hash.substring(1, window.location.hash.length)
     }
@@ -408,52 +412,63 @@ function connect() {
                 if (move.indexOf($(this).attr("id")) === -1) {
                     var from = move;
                     var to = $(this).attr("id");
-                    if ($(this).children("div").length) {
-                        movesArray.push(new MoveNotification("", myFigureColor, from, to, "MoveNotification"));
-                        killingFigure.call(this, $(this).children("div"));
-                    } else {
-                        move = move + " &rarr; " + $(this).attr("id");
+                    if ($(this).children("div").length) { // if try to kill or castling
+                        if ($(this).children("div").attr("color") === $(ui.draggable[0]).attr("color")) { // it's a castling
+                            $("#" + from).append($(this).children("div"));
+                            $(this).children("div").css({top: 0, left: 0});
+                            $(this).append($(ui.draggable[0]));
+                            $(ui.draggable[0]).css({top: 0, left: 0});
+                            var moveDiv = "<div class='mv-" + myFigureColor + "'>" + to + " &harr; " + from + "</div>";
+                            movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification")); // make a move on opponent's computer. make no record
+                            movesArray.push(new MoveNotification("", myFigureColor, to, from, "MoveNotification")); // make a move on opponent's computer. make no record
+                            $("#" + myFigureColor + "-moves").append(moveDiv); // make  a record
+                        } else {
+                            movesArray.push(new MoveNotification("", myFigureColor, from, to, "MoveNotification")); // make a move on opponent's computer. make no record
+                            killingFigure.call(this, $(this).children("div")); // kill figure. move to cemetery
+                            $(this).append($(event.toElement));
+                        }
+                    } else { // usual move
+                        move = move + " &rarr; " + to;
                         var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
-                        $("#" + myFigureColor + "-moves").append(moveDiv);
-                        movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification"));
+                        $("#" + myFigureColor + "-moves").append(moveDiv); // make  a record
+                        movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification")); // make a move and make a record on opponent side
                         move = "";
+                        $(this).append($(event.toElement)); // physically put it to the cell
                     }
-                    $(event.toElement).css({top: 0, left: 0});
-                    $(this).append($(event.toElement));
                 }
+                $(event.toElement).css({top: 0, left: 0}); // put figure to the middle of a cell
             }
         });
     }
 
     function onMessage(evt) {
         var message = evt.data;
-        if (message.indexOf("{") !== -1 && message.indexOf("MoveNotification") !== -1) {
+        if (message.indexOf("{") !== -1) {
             var json = JSON.parse(message);
-            $('#button > input[type="button"]').prop('disabled', false);
-            if (json.to.length === 2) { // regular cell. not cemetery
-                resumeTimer();
-            }
-            if (json.div.length) {
-                $("#" + json.div.substring(json.div.indexOf("mv-") + 3, json.div.indexOf("'>")) + "-moves").append(json.div);
-            }
-            $("#" + json.to).append($("#" + json.from).find("div[color=" + json.figureColor + "]"));
-        } else if (message.indexOf("{") !== -1 && message.indexOf("Message") !== -1) {
-            var json = JSON.parse(message);
-            $("#chatMessages").val($("#chatMessages").val() + "\n" + (json.issuer + ": " + json.msg));
-            document.getElementById("chatMessages").scrollTop = document.getElementById("chatMessages").scrollHeight;
-        } else if (message.indexOf("{") !== -1 && message.indexOf("Typing") !== -1) {
-            var json = JSON.parse(message);
-            if (json.typing) {
-                $("#typing").fadeIn();
-            } else {
-                $("#typing").fadeOut();
-            }
-        } else if (message.indexOf("{") !== -1 && message.indexOf("Time") !== -1) {
-            var json = JSON.parse(message);
-            if (json.color === "white") {
-                $("#whiteTime").html("<span class='time'>" + json.time + "</span>");
-            } else if (json.color === "black") {
-                $("#blackTime").html("<span class='time'>" + json.time + "</span>");
+            if (message.indexOf("MoveNotification") !== -1) {
+                $('#button > input[type="button"]').prop('disabled', false);
+                if (json.to.length === 2) { // regular cell. not cemetery
+                    resumeTimer();
+                }
+                if (json.div.length) { // put record to move log
+                    $("#" + json.div.substring(json.div.indexOf("mv-") + 3, json.div.indexOf("'>")) + "-moves").append(json.div);
+                }
+                $("#" + json.to).append($($("#" + json.from).find("div[color=" + json.figureColor + "]").get(0)));
+            } else if (message.indexOf("Message") !== -1) {
+                $("#chatMessages").val($("#chatMessages").val() + "\n" + (json.issuer + ": " + json.msg));
+                document.getElementById("chatMessages").scrollTop = document.getElementById("chatMessages").scrollHeight;
+            } else if (message.indexOf("Typing") !== -1) {
+                if (json.typing) {
+                    $("#typing").fadeIn();
+                } else {
+                    $("#typing").fadeOut();
+                }
+            } else if (message.indexOf("Time") !== -1) {
+                if (json.color === "white") {
+                    $("#whiteTime").html("<span class='time'>" + json.time + "</span>");
+                } else if (json.color === "black") {
+                    $("#blackTime").html("<span class='time'>" + json.time + "</span>");
+                }
             }
         } else if (message.indexOf("Ok!") === -1 && message.indexOf("session:") !== -1) {
             if (window.location.href.indexOf("#") === -1) {
@@ -546,12 +561,12 @@ $(function () {
     });
 
     $('#button > input[type="button"]').click(function () {
+        $('#button > input[type="button"]').prop('disabled', true);
         pauseTimer();
         movesArray.forEach(function (s) {
             websocket.send(JSON.stringify(s));
         });
         movesArray = [];
-        $('#button > input[type="button"]').prop('disabled', true);
     });
 });
 

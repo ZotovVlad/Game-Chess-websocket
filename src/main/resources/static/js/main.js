@@ -315,7 +315,7 @@ function pauseTimer() {
 }
 
 function resumeTimer() {
-    if (myFigureColor === "black") {
+    if (myFigureColor === "black" && blackInterval === undefined) {
         blackInterval = setInterval(function () {
             blackTime += 1;
             minutes = Math.floor(blackTime / 60);
@@ -323,7 +323,7 @@ function resumeTimer() {
             websocket.send(JSON.stringify(new Time("black", str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2), "Time")));
             $("#blackTime").html("<span class='time'>" + str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2) + "</span>");
         }, 1000);
-    } else {
+    } else if (whiteInterval === undefined) {
         whiteInterval = setInterval(function () {
             whiteTime += 1;
             minutes = Math.floor(whiteTime / 60);

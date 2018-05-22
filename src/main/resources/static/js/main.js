@@ -8,9 +8,20 @@ var minutes;
 var seconds;
 var websocket;
 var movesArray = [];
+var previousMove;
+var moveDiv;
+var colorForRecordLog;
+var divForRecordLog;
 
 function str_pad_left(string, pad, length) {
     return (new Array(length + 1).join(pad) + string).slice(-length);
+}
+
+function PreviousMove(from, to, color, figureDiv) {
+    this.from = from;
+    this.to = to;
+    this.color = color;
+    this.figureDiv = figureDiv;
 }
 
 function MoveNotification(div, figureColor, from, to, typeName) {
@@ -55,7 +66,7 @@ var gameTable = '<div class="cemetery"><div class="cemetery-white" id="cw1"></di
     '</div>\n' +
     '<div class="divTableCell" id="g8"><div id="black-knight2" class="draggable" color="black">&#9822;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="h8"><div id="black-rack2" class="draggable" color="black">&#9820;</div>\n' +
+    '<div class="divTableCell" id="h8"><div id="black-rock2" class="draggable" color="black">&#9820;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '<div class="divTableRow">\n' +
@@ -149,7 +160,7 @@ var gameTable = '<div class="cemetery"><div class="cemetery-white" id="cw1"></di
     '</div>\n' +
     '<div class="divTableCell" id="g1"><div id="white-knight2" class="draggable" color="white">&#9816;</div>\n' +
     '</div>\n' +
-    '<div class="divTableCell" id="h1"><div id="white-rack2" class="draggable" color="white">&#9814;</div>\n' +
+    '<div class="divTableCell" id="h1"><div id="white-rock2" class="draggable" color="white">&#9814;</div>\n' +
     '</div>\n' +
     '</div>\n' +
     '</div>\n' +
@@ -159,7 +170,7 @@ var gameTableVerse = '<div class="cemetery"><div class="cemetery-black" id="cb1"
     '<div class="divTableBody">\n' +
     '<div class="divTableRow">\n' +
     '<div class="divTableCell" id="h1">\n' +
-    '<div id="white-rack2" class="draggable" color="white">&#9814;</div>\n' +
+    '<div id="white-rock2" class="draggable" color="white">&#9814;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="g1">\n' +
     '<div id="white-knight2" class="draggable" color="white">&#9816;</div>\n' +
@@ -277,7 +288,7 @@ var gameTableVerse = '<div class="cemetery"><div class="cemetery-black" id="cb1"
     '</div>\n' +
     '<div class="divTableRow">\n' +
     '<div class="divTableCell" id="h8">\n' +
-    '<div id="black-rack2" class="draggable" color="black">&#9820;</div>\n' +
+    '<div id="black-rock2" class="draggable" color="black">&#9820;</div>\n' +
     '</div>\n' +
     '<div class="divTableCell" id="g8">\n' +
     '<div id="black-knight2" class="draggable" color="black">&#9822;</div>\n' +
@@ -323,7 +334,7 @@ function resumeTimer() {
             websocket.send(JSON.stringify(new Time("black", str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2), "Time")));
             $("#blackTime").html("<span class='time'>" + str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2) + "</span>");
         }, 1000);
-    } else if (whiteInterval === undefined) {
+    } else if (myFigureColor === "white" && whiteInterval === undefined) {
         whiteInterval = setInterval(function () {
             whiteTime += 1;
             minutes = Math.floor(whiteTime / 60);
@@ -354,6 +365,11 @@ function connect() {
     }
     websocket = new WebSocket(webSocketUrl);
     var move; // chess move log (e2-e4)
+
+    function saveForRecordLog(color, div) {
+        colorForRecordLog = color;
+        divForRecordLog = div;
+    }
 
     function addDnD() {
         $(".draggable").draggable({
@@ -395,8 +411,8 @@ function connect() {
 
             toCemetery("white", elem);
 
-            var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
-            $("#" + myFigureColor + "-moves").append(moveDiv);
+            moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
+            saveForRecordLog(myFigureColor, moveDiv);
             movesArray.push(new MoveNotification(moveDiv, $(elem).attr("color"), from, to, "MoveNotification"));
             move = "";
         }
@@ -407,34 +423,52 @@ function connect() {
             }
         });
 
+        function savePreviousMove(from, to, color, figureDiv) {
+            previousMove = new PreviousMove(from, to, color, figureDiv);
+            console.log(previousMove);
+        }
+
         $(".divTableCell").droppable({
             drop: function (event, ui) {
                 if (move.indexOf($(this).attr("id")) === -1) {
                     var from = move;
                     var to = $(this).attr("id");
+                    var figureDiv;
                     if ($(this).children("div").length) { // if try to kill or castling
                         if ($(this).children("div").attr("color") === $(ui.draggable[0]).attr("color")) { // it's a castling
                             $("#" + from).append($(this).children("div"));
                             $(this).children("div").css({top: 0, left: 0});
                             $(this).append($(ui.draggable[0]));
                             $(ui.draggable[0]).css({top: 0, left: 0});
-                            var moveDiv = "<div class='mv-" + myFigureColor + "'>" + to + " &harr; " + from + "</div>";
+                            figureDiv = $(ui.draggable[0]);
+                            moveDiv = "<div class='mv-" + myFigureColor + "'>" + to + " &harr; " + from + "</div>";
                             movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification")); // make a move on opponent's computer. make no record
                             movesArray.push(new MoveNotification("", myFigureColor, to, from, "MoveNotification")); // make a move on opponent's computer. make no record
-                            $("#" + myFigureColor + "-moves").append(moveDiv); // make  a record
-                        } else {
+                            saveForRecordLog(myFigureColor, moveDiv);
+                        } else { // kill
                             movesArray.push(new MoveNotification("", myFigureColor, from, to, "MoveNotification")); // make a move on opponent's computer. make no record
                             killingFigure.call(this, $(this).children("div")); // kill figure. move to cemetery
                             $(this).append($(event.toElement));
+                            figureDiv = $(event.toElement);
                         }
-                    } else { // usual move
-                        move = move + " &rarr; " + to;
-                        var moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
-                        $("#" + myFigureColor + "-moves").append(moveDiv); // make  a record
-                        movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification")); // make a move and make a record on opponent side
+                    } else { // normal move
+                        figureDiv = $(event.toElement);
+                        if (previousMove !== undefined && (($(previousMove.figureDiv).attr("id").indexOf('king') !== -1 || $(previousMove.figureDiv).attr("id").indexOf('rock') !== -1)
+                            && (figureDiv.attr("id").indexOf('king') !== -1 || figureDiv.attr("id").indexOf('rock') !== -1))) { // still castling. calling on a second move
+                            movesArray[0].div = ""; // clean record's div of a first move when i thought it's a normal move
+                            moveDiv = "<div class='mv-" + myFigureColor + "'>" + previousMove.from + " &harr; " + from + "</div>";
+                            movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification")); // make a move and make a record on opponent side
+                        } else {
+                            move = move + " &rarr; " + to;
+                            moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
+                            movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification")); // make a move and make a record on opponent side
+                        }
+                        saveForRecordLog(myFigureColor, moveDiv);
                         move = "";
-                        $(this).append($(event.toElement)); // physically put it to the cell
+                        $(this).append(figureDiv); // physically put it to the cell
+
                     }
+                    savePreviousMove(from, to, myFigureColor, figureDiv);
                 }
                 $(event.toElement).css({top: 0, left: 0}); // put figure to the middle of a cell
             }
@@ -566,6 +600,7 @@ $(function () {
         movesArray.forEach(function (s) {
             websocket.send(JSON.stringify(s));
         });
+        $("#" + colorForRecordLog + "-moves").append(divForRecordLog);
         movesArray = [];
     });
 });

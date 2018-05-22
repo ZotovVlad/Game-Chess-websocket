@@ -594,14 +594,26 @@ $(function () {
         }, 1500);
     });
 
+    function moveIsDone() {
+        if (movesArray.size() !== 0) {
+            $('#button > input[type="button"]').prop('disabled', true);
+            pauseTimer();
+            movesArray.forEach(function (s) {
+                websocket.send(JSON.stringify(s));
+            });
+            $("#" + colorForRecordLog + "-moves").append(divForRecordLog);
+            movesArray = [];
+        }
+    }
+
     $('#button > input[type="button"]').click(function () {
-        $('#button > input[type="button"]').prop('disabled', true);
-        pauseTimer();
-        movesArray.forEach(function (s) {
-            websocket.send(JSON.stringify(s));
-        });
-        $("#" + colorForRecordLog + "-moves").append(divForRecordLog);
-        movesArray = [];
+        moveIsDone();
+    });
+
+    $("body:not(#inp)").keypress(function (event) {
+        if (event.which === 32) {
+            moveIsDone();
+        }
     });
 });
 

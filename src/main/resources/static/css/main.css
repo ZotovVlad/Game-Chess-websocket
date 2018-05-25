@@ -27,6 +27,7 @@ div[class^="cemetery-"] div {
 div[class^="mv-"] {
     width: 100%;
     font-family: monospace;
+    float: left;
 }
 
 .moves span {
@@ -168,6 +169,22 @@ div[class^="mv-"] {
 #main-chess {
     float: left;
     width: 80vw;
+}
+
+.move-text {
+    float: left;
+    margin-right: 0.5vw;
+}
+
+.cancel_button {
+    background: url(/image/undo.png) no-repeat center;
+    position: relative;
+    max-height: 1vw;
+    max-width: 1vw;
+    min-width: 1vw;
+    min-height: 1vw;
+    display: inline-block;
+    background-size: 1vw;
 }
 
 .divTable {

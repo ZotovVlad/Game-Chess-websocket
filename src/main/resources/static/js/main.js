@@ -368,7 +368,7 @@ function connect() {
 
     function saveForRecordLog(color, div) {
         colorForRecordLog = color;
-        divForRecordLog = div;
+        divForRecordLog = $(div).append("<div class='cancel_button'></div>");
     }
 
     function addDnD() {
@@ -411,7 +411,7 @@ function connect() {
 
             toCemetery("white", elem);
 
-            moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
+            moveDiv = "<div class='mv-" + myFigureColor + "'><div class='move-text'>" + move + "</div></div>";
             saveForRecordLog(myFigureColor, moveDiv);
             movesArray.push(new MoveNotification(moveDiv, $(elem).attr("color"), from, to, "MoveNotification"));
             move = "";
@@ -441,7 +441,7 @@ function connect() {
                             $(this).append($(ui.draggable[0]));
                             $(ui.draggable[0]).css({top: 0, left: 0});
                             figureDiv = $(ui.draggable[0]);
-                            moveDiv = "<div class='mv-" + myFigureColor + "'>" + to + " &harr; " + from + "</div>";
+                            moveDiv = "<div class='mv-" + myFigureColor + "'><div class='move-text'>" + to + " &harr; " + from + "</div></div>";
                             movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification")); // make a move on opponent's computer. make no record
                             movesArray.push(new MoveNotification("", myFigureColor, to, from, "MoveNotification")); // make a move on opponent's computer. make no record
                             saveForRecordLog(myFigureColor, moveDiv);
@@ -456,11 +456,11 @@ function connect() {
                         if (previousMove !== undefined && (($(previousMove.figureDiv).attr("id").indexOf('king') !== -1 || $(previousMove.figureDiv).attr("id").indexOf('rock') !== -1)
                             && (figureDiv.attr("id").indexOf('king') !== -1 || figureDiv.attr("id").indexOf('rock') !== -1))) { // still castling. calling on a second move
                             movesArray[0].div = ""; // clean record's div of a first move when i thought it's a normal move
-                            moveDiv = "<div class='mv-" + myFigureColor + "'>" + previousMove.from + " &harr; " + from + "</div>";
+                            moveDiv = "<div class='mv-" + myFigureColor + "'><div class='move-text'>" + previousMove.from + " &harr; " + from + "</div></div>";
                             movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification")); // make a move and make a record on opponent side
                         } else {
                             move = move + " &rarr; " + to;
-                            moveDiv = "<div class='mv-" + myFigureColor + "'>" + move + "</div>";
+                            moveDiv = "<div class='mv-" + myFigureColor + "'><div class='move-text'>" + move + "</div></div>";
                             movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification")); // make a move and make a record on opponent side
                         }
                         saveForRecordLog(myFigureColor, moveDiv);
@@ -595,12 +595,13 @@ $(function () {
     });
 
     function moveIsDone() {
-        if (movesArray.size() !== 0) {
+        if (movesArray.length !== 0) {
             $('#button > input[type="button"]').prop('disabled', true);
             pauseTimer();
             movesArray.forEach(function (s) {
                 websocket.send(JSON.stringify(s));
             });
+            $(".mv-" + colorForRecordLog).last().find(".cancel_button").remove();
             $("#" + colorForRecordLog + "-moves").append(divForRecordLog);
             movesArray = [];
         }

@@ -369,7 +369,7 @@ function connect() {
     function saveForRecordLog(color, div) {
         colorForRecordLog = color;
         if (div.indexOf("&rarr; X</div>") === -1) {
-            divForRecordLog.push($(div).append("<div id='cancel_button'></div>"));
+            divForRecordLog.push($(div).append("<div class='cancel_button'></div>"));
         } else {
             divForRecordLog.push($(div));
         }
@@ -442,7 +442,7 @@ function connect() {
                         if ($(this).children("div").attr("color") === $(ui.draggable[0]).attr("color")) { // it's a castling
                             $("#" + from).append($(this).children("div"));
                             $(this).children("div").css({top: 0, left: 0});
-                            $(this).append($(ui.draggable[0]));
+                            $(event.target).append($(ui.draggable[0]));
                             $(ui.draggable[0]).css({top: 0, left: 0});
                             figureDiv = $(ui.draggable[0]);
                             moveDiv = "<div class='mv-" + myFigureColor + "'><div class='move-text'>" + to + " &harr; " + from + "</div></div>";
@@ -452,11 +452,21 @@ function connect() {
                         } else { // kill
                             movesArray.push(new MoveNotification("", myFigureColor, from, to, "MoveNotification")); // make a move on opponent's computer. make no record
                             killingFigure.call(this, $(this).children("div")); // kill figure. move to cemetery
-                            $(this).append($(event.toElement));
+                            $(event.target).append($(event.toElement));
                             figureDiv = $(event.toElement);
                         }
                     } else { // normal move
                         figureDiv = $(event.toElement);
+                        if (previousMove !== undefined && previousMove.length > 0) {
+                            for (var i = 0; i < previousMove.length; i++) {
+                                if (previousMove[i].from === to && previousMove[i].to === from) {
+                                    previousMove.splice(i, 1);
+                                    movesArray.splice(i, 1);
+                                    divForRecordLog.splice(i, 1);
+                                    return;
+                                }
+                            }
+                        }
                         if (previousMove !== undefined && previousMove.length > 0
                             && (($(previousMove[previousMove.length - 1].figureDiv).attr("id").indexOf('king') !== -1
                                 || $(previousMove[previousMove.length - 1].figureDiv).attr("id").indexOf('rock') !== -1)
@@ -471,7 +481,7 @@ function connect() {
                         }
                         saveForRecordLog(myFigureColor, moveDiv);
                         move = "";
-                        $(this).append(figureDiv); // physically put it to the cell
+                        $(event.target).append(figureDiv); // physically put it to the cell
 
                     }
                     savePreviousMove(from, to, myFigureColor, figureDiv);
@@ -487,7 +497,7 @@ function connect() {
             var json = JSON.parse(message);
             if (message.indexOf("MoveNotification") !== -1) {
                 previousMove = [];
-                $(".mv-" + colorForRecordLog).last().find("#cancel_button").remove();
+                $(".cancel_button").remove();
                 $('#button > input[type="button"]').prop('disabled', false);
                 if (json.to.length === 2) { // regular cell. not cemetery
                     resumeTimer();
@@ -635,7 +645,7 @@ $(function () {
             movesArray.forEach(function (s) {
                 websocket.send(JSON.stringify(s));
             });
-            $(".mv-" + colorForRecordLog).last().find("#cancel_button").remove();
+            $(".cancel_button").remove();
             for (var i = 0; divForRecordLog.length > i; i++) {
                 if (i === 0) {
                     $("#" + colorForRecordLog + "-moves").append(divForRecordLog[i]);
@@ -658,7 +668,7 @@ $(function () {
         }
     });
 
-    $(".moves").on('click', '#cancel_button', function (event, el) {
+    $(".moves").on('click', '.cancel_button', function (event, el) {
         undoMove();
         $(event.currentTarget).parent(".mv-" + colorForRecordLog).remove();
     });

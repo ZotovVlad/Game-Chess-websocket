@@ -495,7 +495,13 @@ function connect() {
         var message = evt.data;
         if (message.indexOf("{") !== -1) {
             var json = JSON.parse(message);
-            if (message.indexOf("MoveNotification") !== -1) {
+            if (message.indexOf("Time") !== -1) {
+                if (json.color === "white") {
+                    $("#whiteTime").html("<span class='time'>" + json.time + "</span>");
+                } else if (json.color === "black") {
+                    $("#blackTime").html("<span class='time'>" + json.time + "</span>");
+                }
+            } else if (message.indexOf("MoveNotification") !== -1) {
                 previousMove = [];
                 $(".cancel_button").remove();
                 $('#button > input[type="button"]').prop('disabled', false);
@@ -509,17 +515,13 @@ function connect() {
             } else if (message.indexOf("Message") !== -1) {
                 $("#chatMessages").val($("#chatMessages").val() + "\n" + (json.issuer + ": " + json.msg));
                 document.getElementById("chatMessages").scrollTop = document.getElementById("chatMessages").scrollHeight;
+                json.typeName = "MsgReceived";
+                websocket.send(JSON.stringify(json));
             } else if (message.indexOf("Typing") !== -1) {
                 if (json.typing) {
                     $("#typing").fadeIn();
                 } else {
                     $("#typing").fadeOut();
-                }
-            } else if (message.indexOf("Time") !== -1) {
-                if (json.color === "white") {
-                    $("#whiteTime").html("<span class='time'>" + json.time + "</span>");
-                } else if (json.color === "black") {
-                    $("#blackTime").html("<span class='time'>" + json.time + "</span>");
                 }
             } else if (message.indexOf("CancelMove") !== -1) {
                 pauseTimer();
@@ -529,6 +531,9 @@ function connect() {
                 if ($(".mv-" + json.figureColor).last().text().indexOf(json.to) !== -1) {
                     $(".mv-" + json.figureColor).last().remove();
                 }
+            } else if (message.indexOf("MsgReceived")) {
+                $("#chatMessages").val($("#chatMessages").val() + "\n" + (json.issuer + ": " + json.msg));
+                document.getElementById("chatMessages").scrollTop = document.getElementById("chatMessages").scrollHeight;
             }
         } else if (message.indexOf("Ok!") === -1 && message.indexOf("session:") !== -1) {
             if (window.location.href.indexOf("#") === -1) {
@@ -621,9 +626,7 @@ $(function () {
         if (event.which === 13) {
             event.preventDefault();
             websocket.send(JSON.stringify(new Message(myFigureColor, $("#inp textarea").val(), "Message")));
-            $("#chatMessages").val($("#chatMessages").val() + "\n" + (myFigureColor + ": " + $("#inp textarea").val()));
             $("#inp textarea").val("");
-            document.getElementById("chatMessages").scrollTop = document.getElementById("chatMessages").scrollHeight;
             return;
         }
 

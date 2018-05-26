@@ -8,10 +8,10 @@ var minutes;
 var seconds;
 var websocket;
 var movesArray = [];
-var previousMove;
+var previousMove = [];
 var moveDiv;
 var colorForRecordLog;
-var divForRecordLog;
+var divForRecordLog = [];
 
 function str_pad_left(string, pad, length) {
     return (new Array(length + 1).join(pad) + string).slice(-length);
@@ -368,7 +368,11 @@ function connect() {
 
     function saveForRecordLog(color, div) {
         colorForRecordLog = color;
-        divForRecordLog = $(div).append("<div class='cancel_button'></div>");
+        if (div.indexOf("&rarr; X</div>") === -1) {
+            divForRecordLog.push($(div).append("<div id='cancel_button'></div>"));
+        } else {
+            divForRecordLog.push($(div));
+        }
     }
 
     function addDnD() {
@@ -413,6 +417,7 @@ function connect() {
 
             moveDiv = "<div class='mv-" + myFigureColor + "'><div class='move-text'>" + move + "</div></div>";
             saveForRecordLog(myFigureColor, moveDiv);
+            savePreviousMove(from, to, myFigureColor, $(elem));
             movesArray.push(new MoveNotification(moveDiv, $(elem).attr("color"), from, to, "MoveNotification"));
             move = "";
         }
@@ -424,8 +429,7 @@ function connect() {
         });
 
         function savePreviousMove(from, to, color, figureDiv) {
-            previousMove = new PreviousMove(from, to, color, figureDiv);
-            console.log(previousMove);
+            previousMove.push(new PreviousMove(from, to, color, figureDiv));
         }
 
         $(".divTableCell").droppable({
@@ -453,10 +457,12 @@ function connect() {
                         }
                     } else { // normal move
                         figureDiv = $(event.toElement);
-                        if (previousMove !== undefined && (($(previousMove.figureDiv).attr("id").indexOf('king') !== -1 || $(previousMove.figureDiv).attr("id").indexOf('rock') !== -1)
+                        if (previousMove !== undefined && previousMove.length > 0
+                            && (($(previousMove[previousMove.length - 1].figureDiv).attr("id").indexOf('king') !== -1
+                                || $(previousMove[previousMove.length - 1].figureDiv).attr("id").indexOf('rock') !== -1)
                             && (figureDiv.attr("id").indexOf('king') !== -1 || figureDiv.attr("id").indexOf('rock') !== -1))) { // still castling. calling on a second move
                             movesArray[0].div = ""; // clean record's div of a first move when i thought it's a normal move
-                            moveDiv = "<div class='mv-" + myFigureColor + "'><div class='move-text'>" + previousMove.from + " &harr; " + from + "</div></div>";
+                            moveDiv = "<div class='mv-" + myFigureColor + "'><div class='move-text'>" + previousMove[previousMove.length - 1].from + " &harr; " + from + "</div></div>";
                             movesArray.push(new MoveNotification(moveDiv, myFigureColor, from, to, "MoveNotification")); // make a move and make a record on opponent side
                         } else {
                             move = move + " &rarr; " + to;
@@ -480,6 +486,8 @@ function connect() {
         if (message.indexOf("{") !== -1) {
             var json = JSON.parse(message);
             if (message.indexOf("MoveNotification") !== -1) {
+                previousMove = [];
+                $(".mv-" + colorForRecordLog).last().find("#cancel_button").remove();
                 $('#button > input[type="button"]').prop('disabled', false);
                 if (json.to.length === 2) { // regular cell. not cemetery
                     resumeTimer();
@@ -502,6 +510,14 @@ function connect() {
                     $("#whiteTime").html("<span class='time'>" + json.time + "</span>");
                 } else if (json.color === "black") {
                     $("#blackTime").html("<span class='time'>" + json.time + "</span>");
+                }
+            } else if (message.indexOf("CancelMove") !== -1) {
+                pauseTimer();
+                $('#button > input[type="button"]').prop('disabled', true);
+                $("#" + json.div).css({top: 0, left: 0});
+                $("#" + json.to).append($("#" + json.div));
+                if ($(".mv-" + json.figureColor).last().text().indexOf(json.to) !== -1) {
+                    $(".mv-" + json.figureColor).last().remove();
                 }
             }
         } else if (message.indexOf("Ok!") === -1 && message.indexOf("session:") !== -1) {
@@ -547,6 +563,24 @@ function connect() {
     };
 
     return websocket;
+}
+
+function undoMove() {
+    for (var i = previousMove.length - 1; i >= 0; i--) {
+        var from = previousMove[i].from;
+        var to = previousMove[i].to;
+        var figureDiv = previousMove[i].figureDiv;
+        var color = previousMove[i].color;
+        $("#" + from).append(figureDiv);
+        $(figureDiv).css({top: 0, left: 0});
+        movesArray.push(new MoveNotification(figureDiv.attr("id"), color, to, from, "CancelMove"));
+    }
+    movesArray.forEach(function (s) {
+        websocket.send(JSON.stringify(s));
+    });
+    movesArray = [];
+    resumeTimer();
+    $('#button > input[type="button"]').prop('disabled', false);
 }
 
 $(function () {
@@ -601,8 +635,15 @@ $(function () {
             movesArray.forEach(function (s) {
                 websocket.send(JSON.stringify(s));
             });
-            $(".mv-" + colorForRecordLog).last().find(".cancel_button").remove();
-            $("#" + colorForRecordLog + "-moves").append(divForRecordLog);
+            $(".mv-" + colorForRecordLog).last().find("#cancel_button").remove();
+            for (var i = 0; divForRecordLog.length > i; i++) {
+                if (i === 0) {
+                    $("#" + colorForRecordLog + "-moves").append(divForRecordLog[i]);
+                } else {
+                    $(".mv-" + colorForRecordLog).last().append("<br />").append(divForRecordLog[i].children());
+                }
+            }
+            divForRecordLog = [];
             movesArray = [];
         }
     }
@@ -615,6 +656,11 @@ $(function () {
         if (event.which === 32) {
             moveIsDone();
         }
+    });
+
+    $(".moves").on('click', '#cancel_button', function (event, el) {
+        undoMove();
+        $(event.currentTarget).parent(".mv-" + colorForRecordLog).remove();
     });
 });
 

@@ -176,7 +176,7 @@ div[class^="mv-"] {
     margin-right: 0.5vw;
 }
 
-.cancel_button {
+#cancel_button {
     background: url(/image/undo.png) no-repeat center;
     position: relative;
     max-height: 1vw;
@@ -185,6 +185,7 @@ div[class^="mv-"] {
     min-height: 1vw;
     display: inline-block;
     background-size: 1vw;
+    cursor: pointer;
 }
 
 .divTable {
